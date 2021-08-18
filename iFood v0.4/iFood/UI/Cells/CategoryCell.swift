@@ -25,4 +25,3 @@ class CategoryCell: UITableViewCell {
         categoryImage.layer.cornerRadius = 10
     }
 }
-

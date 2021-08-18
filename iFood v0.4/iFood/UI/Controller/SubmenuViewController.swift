@@ -11,11 +11,8 @@ import UIKit
 class SubmenuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, Storyboarded {
     
     weak var coordinator: MainCoordinator?
-    
     var submenuItem: String?
     var submenuArray: [Recipe]?
-    
-    
     var submenuAction: ((Recipe?) -> Void)?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -24,7 +21,6 @@ class SubmenuViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        
         submenuArray = getSubmenu(submenuItem ?? "No value")
     }
     

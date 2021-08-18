@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
     
     @IBOutlet weak var tableview: UITableView!
@@ -29,9 +27,6 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
         }
     }
     
-    
-    
-    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         loadContent(state: stateController)
@@ -41,7 +36,6 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
         super.viewWillAppear(true)
     }
     
-    //MARK:- Loading helper methods
     private func loadContent(state: StateController) {
         let loadingController = LoadingViewController()
         add(loadingController)
@@ -50,7 +44,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
             loadingController.remove()
             self?.menuDidLoad(state.items)
         }
-         tableview.reloadData()
+        tableview.reloadData()
     }
     private func menuDidLoad(_ menu: [FoodCategory]) {
         menuDataSource = GenericDataSource.make(for: menu)
@@ -59,11 +53,6 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
         })
     }
 }
-
-
-
-
-
 
 extension UIViewController {
     
@@ -81,9 +70,6 @@ extension UIViewController {
     }
 }
 
-
-
-
 class LoadingViewController: UIViewController {
     
     lazy var activityIndicator : UIActivityIndicatorView = {
@@ -100,11 +86,10 @@ class LoadingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         activityIndicator.startAnimating()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
-                    self?.activityIndicator.startAnimating()
-                }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+            self?.activityIndicator.startAnimating()
+        }
     }
-    
     
     func addSpinner() {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -114,6 +99,6 @@ class LoadingViewController: UIViewController {
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-            ])
+        ])
     }
 }

@@ -6,7 +6,6 @@
 //  Copyright © 2019 Sergiu. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MenuDelegate: NSObject {
@@ -32,6 +31,4 @@ extension MenuDelegate: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         cellhandler?(stateController.items[indexPath.row].title.rawValue)
     }
-    
 }
-

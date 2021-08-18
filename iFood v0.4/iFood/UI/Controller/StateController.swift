@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class StateController {
     
     static let data = DataSet()

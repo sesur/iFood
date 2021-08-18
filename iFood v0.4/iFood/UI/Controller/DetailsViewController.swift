@@ -17,7 +17,7 @@ class DetailsViewController: UIViewController, Storyboarded {
     @IBOutlet weak var recipeTitle: UILabel!
     
     var recipe: Recipe?
-
+    
     override func viewDidLoad() {
         super .viewDidLoad()
         
@@ -27,4 +27,3 @@ class DetailsViewController: UIViewController, Storyboarded {
         recipeDescription.text = safe.instructions
     }
 }
-
