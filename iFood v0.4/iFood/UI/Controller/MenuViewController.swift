@@ -14,16 +14,16 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
     
     let stateController = StateController()
     var cellAction: ((String)-> Void)?
-    var menuDataSource: UITableViewDataSource? {
+    var dataSource: UITableViewDataSource? {
         didSet {
-            tableview.dataSource = menuDataSource
+            tableview.dataSource = dataSource
             tableview.reloadData()
         }
     }
     
-    var tableViewdelegate: UITableViewDelegate? {
+    var delegate: UITableViewDelegate? {
         didSet {
-            tableview.delegate = tableViewdelegate
+            tableview.delegate = delegate
         }
     }
     
@@ -47,8 +47,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
         tableview.reloadData()
     }
     private func menuDidLoad(_ menu: [FoodCategory]) {
-        menuDataSource = GenericDataSource.make(for: menu)
-        tableViewdelegate = MenuDelegate(tableView: tableview, state: stateController, completion: { [weak self] title in
+        dataSource = GenericDataSource.make(for: menu)
+        delegate = MenuDelegate(tableView: tableview, state: stateController, completion: { [weak self] title in
             self?.cellAction?(title)
         })
     }
