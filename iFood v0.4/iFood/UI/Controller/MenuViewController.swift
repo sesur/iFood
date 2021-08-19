@@ -13,7 +13,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
     @IBOutlet weak var tableview: UITableView!
     
     let stateController = StateController()
-    var cellAction: ((String)-> Void)?
+    var cellAction: ((String) -> Void)?
+    
     var dataSource: UITableViewDataSource? {
         didSet {
             tableview.dataSource = dataSource
@@ -44,16 +45,18 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
             loadingController.remove()
             self?.menuDidLoad(state.items)
         }
-        tableview.reloadData()
     }
+    
     private func menuDidLoad(_ menu: [FoodCategory]) {
-        dataSource = DataSource(menu: menu.map({ item in
+        dataSource = MenuDataSource(menu: menu.map({ item in
             CategoryViewModel(item) { }
         }))
         
-        delegate = MenuDelegate(tableView: tableview, state: stateController, completion: { [weak self] title in
-            self?.cellAction?(title)
-        })
+        delegate = MenuDelegate(tableView: tableview, menu: menu.map({ item in
+            CategoryViewModel(item, selection: {
+                self.cellAction?(item.title.rawValue)
+            })
+        }))
     }
 }
 

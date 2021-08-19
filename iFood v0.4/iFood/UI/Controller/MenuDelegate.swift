@@ -9,26 +9,23 @@
 import UIKit
 
 class MenuDelegate: NSObject {
+
+    private let menu: [CategoryViewModel]
     
-    typealias CellHandler = ((String)-> Void)?
-    private let stateController: StateController
-    private var cellhandler: CellHandler
-    
-    init(tableView: UITableView, state: StateController, completion: CellHandler) {
-        self.stateController = state
-        self.cellhandler = completion
+    init(tableView: UITableView, menu: [CategoryViewModel]) {
+        self.menu = menu    
         super.init()
         tableView.delegate = self
     }
 }
 
 extension MenuDelegate: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        cellhandler?(stateController.items[indexPath.row].title.rawValue)
+        let item = menu[indexPath.row]
+        item.select()
     }
 }

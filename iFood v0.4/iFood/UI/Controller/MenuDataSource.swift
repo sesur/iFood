@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DataSource: NSObject, UITableViewDataSource {
+class MenuDataSource: NSObject, UITableViewDataSource {
     
     private let menu: [CategoryViewModel]
     private let reuseIdentifier = "cellCategory"
@@ -25,7 +25,6 @@ class DataSource: NSObject, UITableViewDataSource {
         let item = self.menu[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! CategoryCell
         cell.configure(item)
-        item.select()
         return cell
     }
 }
