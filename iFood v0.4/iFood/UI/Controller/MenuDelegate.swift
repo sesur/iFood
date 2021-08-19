@@ -12,10 +12,10 @@ class MenuDelegate: NSObject {
 
     private let menu: [CategoryViewModel]
     
-    init(tableView: UITableView, menu: [CategoryViewModel]) {
+    init(tableView: UITableView?, menu: [CategoryViewModel]) {
         self.menu = menu    
         super.init()
-        tableView.delegate = self
+        tableView?.delegate = self
     }
 }
 

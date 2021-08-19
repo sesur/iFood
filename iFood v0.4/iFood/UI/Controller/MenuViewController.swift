@@ -8,11 +8,10 @@
 
 import UIKit
 
-class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
+class MenuViewController: UIViewController, Storyboarded {
     
     @IBOutlet weak var tableview: UITableView!
     
-    let stateController = StateController()
     var cellAction: ((String) -> Void)?
     
     var dataSource: UITableViewDataSource? {
@@ -30,33 +29,25 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadContent(state: stateController)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        loadContent(state: StateController())
     }
     
     private func loadContent(state: StateController) {
         let loadingController = LoadingViewController()
         add(loadingController)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self, tableview] in
             loadingController.remove()
-            self?.menuDidLoad(state.items)
+            self?.dataSource = MenuDataSource(menu: state.items.map({ item in
+                CategoryViewModel(item) { }
+            }))
+            
+            self?.delegate = MenuDelegate(tableView: tableview, menu: state.items.map({ item in
+                CategoryViewModel(item, selection: {
+                    self?.cellAction?(item.title.rawValue)
+                })
+            }))
         }
-    }
-    
-    private func menuDidLoad(_ menu: [FoodCategory]) {
-        dataSource = MenuDataSource(menu: menu.map({ item in
-            CategoryViewModel(item) { }
-        }))
-        
-        delegate = MenuDelegate(tableView: tableview, menu: menu.map({ item in
-            CategoryViewModel(item, selection: {
-                self.cellAction?(item.title.rawValue)
-            })
-        }))
     }
 }
 
