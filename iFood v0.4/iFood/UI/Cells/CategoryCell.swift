@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 class CategoryCell: UITableViewCell {
     
     @IBOutlet weak var categoryImage: UIImageView!

@@ -47,7 +47,10 @@ class MenuViewController: UIViewController, UITableViewDelegate, Storyboarded {
         tableview.reloadData()
     }
     private func menuDidLoad(_ menu: [FoodCategory]) {
-        dataSource = GenericDataSource.make(for: menu)
+        dataSource = DataSource(menu: menu.map({ item in
+            CategoryViewModel(item) { }
+        }))
+        
         delegate = MenuDelegate(tableView: tableview, state: stateController, completion: { [weak self] title in
             self?.cellAction?(title)
         })

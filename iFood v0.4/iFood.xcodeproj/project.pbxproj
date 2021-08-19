@@ -24,7 +24,7 @@
 		7D65E6A122EC0BD100E768E7 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65E6A022EC0BD100E768E7 /* MainCoordinator.swift */; };
 		7D65E6A322EC0FBC00E768E7 /* MenuProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65E6A222EC0FBC00E768E7 /* MenuProtocol.swift */; };
 		7D65E6A522F1305C00E768E7 /* SubmenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65E6A422F1305C00E768E7 /* SubmenuCoordinator.swift */; };
-		7D77CE7422F91F9300FFDBED /* GenericDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77CE7322F91F9300FFDBED /* GenericDataSource.swift */; };
+		7D77CE7422F91F9300FFDBED /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77CE7322F91F9300FFDBED /* DataSource.swift */; };
 		7D77CE7622F9243200FFDBED /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77CE7522F9243200FFDBED /* MenuDelegate.swift */; };
 		7D77CE7822FA731E00FFDBED /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77CE7722FA731E00FFDBED /* StateController.swift */; };
 /* End PBXBuildFile section */
@@ -49,7 +49,7 @@
 		7D65E6A022EC0BD100E768E7 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		7D65E6A222EC0FBC00E768E7 /* MenuProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProtocol.swift; sourceTree = "<group>"; };
 		7D65E6A422F1305C00E768E7 /* SubmenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmenuCoordinator.swift; sourceTree = "<group>"; };
-		7D77CE7322F91F9300FFDBED /* GenericDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDataSource.swift; sourceTree = "<group>"; };
+		7D77CE7322F91F9300FFDBED /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		7D77CE7522F9243200FFDBED /* MenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDelegate.swift; sourceTree = "<group>"; };
 		7D77CE7722FA731E00FFDBED /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,7 +108,7 @@
 				7D19726D222D14D30010CA1C /* MenuViewController.swift */,
 				7D1972AA222FAEB90010CA1C /* SubmenuViewController.swift */,
 				7D1D2F25223618A000998C60 /* DetailsViewController.swift */,
-				7D77CE7322F91F9300FFDBED /* GenericDataSource.swift */,
+				7D77CE7322F91F9300FFDBED /* DataSource.swift */,
 				7D77CE7522F9243200FFDBED /* MenuDelegate.swift */,
 				7D77CE7722FA731E00FFDBED /* StateController.swift */,
 			);
@@ -251,7 +251,7 @@
 				7D65E69D22EC080200E768E7 /* Coordinator.swift in Sources */,
 				7D65E6A522F1305C00E768E7 /* SubmenuCoordinator.swift in Sources */,
 				7D1D2F26223618A000998C60 /* DetailsViewController.swift in Sources */,
-				7D77CE7422F91F9300FFDBED /* GenericDataSource.swift in Sources */,
+				7D77CE7422F91F9300FFDBED /* DataSource.swift in Sources */,
 				7D65E6A322EC0FBC00E768E7 /* MenuProtocol.swift in Sources */,
 				7D19726E222D14D30010CA1C /* MenuViewController.swift in Sources */,
 				7D1972AD222FB36A0010CA1C /* SubmenuCell.swift in Sources */,
