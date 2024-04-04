@@ -1,11 +1,3 @@
-//
-//  SubmenuViewController.swift
-//  iFood
-//
-//  Created by Sergiu on 3/6/19.
-//  Copyright © 2019 Sergiu. All rights reserved.
-//
-
 import UIKit
 
 class SubmenuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, Storyboarded {

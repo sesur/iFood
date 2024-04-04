@@ -1,11 +1,3 @@
-//
-//  MenuDelegate.swift
-//  iFood
-//
-//  Created by Sergiu on 8/6/19.
-//  Copyright © 2019 Sergiu. All rights reserved.
-//
-
 import UIKit
 
 class MenuDelegate: NSObject {

@@ -1,11 +1,3 @@
-//
-//  CategoryCell.swift
-//  iFood
-//
-//  Created by Sergiu on 3/5/19.
-//  Copyright © 2019 Sergiu. All rights reserved.
-//
-
 import UIKit
 
 class CategoryCell: UITableViewCell {

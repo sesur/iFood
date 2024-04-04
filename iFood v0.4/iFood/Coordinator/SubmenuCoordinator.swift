@@ -1,15 +1,7 @@
-//
-//  SubmenuCoordinator.swift
-//  iFood
-//
-//  Created by Sergiu on 7/31/19.
-//  Copyright © 2019 Sergiu. All rights reserved.
-//
-
 import UIKit
 
 class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControllerDelegate {
-
+    
     weak var parentCoordinator: MainCoordinator?
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
@@ -24,7 +16,6 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
         showSubmenu(submenuTitle)
     }
     
-    
     //MARK:- MenuProtocol
     func showSubmenu(_ tittle: String) {
         let submenuViewCntroller = SubmenuViewController.instantiate()
@@ -35,7 +26,6 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
         
         navigationController.pushViewController(submenuViewCntroller, animated: true)
     }
-    
     
     func removeDidFinish(_ child: Coordinator?) {
         for (index, coordinator) in childCoordinator.enumerated() {
@@ -52,7 +42,6 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
         detailsViewController.recipe = recipe
         navigationController.pushViewController(detailsViewController, animated: true)
     }
-
     
     //MARK:- UINavigationControllerDelegate
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
@@ -63,6 +52,5 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
             removeDidFinish(detailsViewController.coordinator)
         }
     }
-    
     
 }

@@ -1,11 +1,3 @@
-//
-//  DataSet.swift
-//  iFood
-//
-//  Created by Sergiu on 3/4/19.
-//  Copyright © 2019 Sergiu. All rights reserved.
-//
-
 import Foundation
 
 class DataSet {
@@ -94,7 +86,7 @@ class DataSet {
         Recipe(title: "Veggie Sandwich", instructions: "Toast the bread in a toaster, or under a broiler on both sides. Cut the lettuce leaves in half crosswise and form into 8 neat stacks. \nTo make a double-decker club: On a clean work surface, arrange 3 bread slices in a row. Spread 1 tablespoon mayonnaise over 1 side of each bread slice. Place a lettuce stack on top of the first bread slice, top with 2 tomato slices, and season with salt and pepper, to taste.", imageName: "sandwich4"),
         Recipe(title: "Grilled Panini", instructions: "Toast the bread in a toaster, or under a broiler on both sides. Cut the lettuce leaves in half crosswise and form into 8 neat stacks. \nTo make a double-decker club: On a clean work surface, arrange 3 bread slices in a row. Spread 1 tablespoon mayonnaise over 1 side of each bread slice. Place a lettuce stack on top of the first bread slice, top with 2 tomato slices, and season with salt and pepper, to taste.", imageName: "sandwich5"),
         Recipe(title: "Club Sandwich", instructions: "Toast the bread in a toaster, or under a broiler on both sides. Cut the lettuce leaves in half crosswise and form into 8 neat stacks. \nTo make a double-decker club: On a clean work surface, arrange 3 bread slices in a row. Spread 1 tablespoon mayonnaise over 1 side of each bread slice. Place a lettuce stack on top of the first bread slice, top with 2 tomato slices, and season with salt and pepper, to taste.", imageName: "sandwich6"),
-        ]
+    ]
     
     func getRecipes(forCategoryTitle title: Categories) -> [Recipe] {
         switch title {
@@ -109,7 +101,7 @@ class DataSet {
         case .sandwiches:
             return sandwiches
         }
-    } 
+    }
 }
 
 enum Categories: String {
