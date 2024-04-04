@@ -62,7 +62,7 @@ extension UIViewController {
 class LoadingViewController: UIViewController {
     
     lazy var activityIndicator : UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .whiteLarge)
+        let indicator = UIActivityIndicatorView(style: .large)
         indicator.color = .lightGray
         return indicator
     }()
