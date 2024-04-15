@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 class SubmenuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, Storyboarded {
     
@@ -25,14 +26,25 @@ class SubmenuViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell", for: indexPath) as! SubmenuCell
-        cell.wrapperCell = submenuArray?[indexPath.item]
+        guard let item = submenuArray?[indexPath.item],
+              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
+                                                            for: indexPath) as? SubmenuCell
+        else {
+            return UICollectionViewCell()
+        }
+
+        cell.contentConfiguration = UIHostingConfiguration {
+            let viewModel = RecipeViewModel(title: item.title,
+                                            instructions: item.instructions,
+                                            imageName: item.imageName)
+            SubmenuView(viewModel: viewModel)
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.bounds.width
-        let cellDimention = (width / 2) - 10
+        let width = collectionView.bounds.width
+        let cellDimention = (width / 2) - 0
         return CGSize(width: cellDimention, height: cellDimention)
     }
     
@@ -40,4 +52,18 @@ class SubmenuViewController: UIViewController, UICollectionViewDelegate, UIColle
         let recipe = submenuArray?[indexPath.item]
         submenuAction?(recipe)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+}
+
+struct RecipeViewModel {
+    let title: String
+    let instructions: String
+    let imageName: String
 }
