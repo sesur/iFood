@@ -89,7 +89,8 @@
 				7D65E69A22EC07E900E768E7 /* Coordinator */,
 				CA52BF6C2475C8720053A0A3 /* Main */,
 				7D19727D222D14E70010CA1C /* Model */,
-				CA52BF6D2475C8FD0053A0A3 /* UI */,
+				CA52BF6D2475C8FD0053A0A3 /* View */,
+				7D19727E222D14F50010CA1C /* Controller */,
 			);
 			path = iFood;
 			sourceTree = "<group>";
@@ -158,14 +159,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		CA52BF6D2475C8FD0053A0A3 /* UI */ = {
+		CA52BF6D2475C8FD0053A0A3 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				CA52BF6E2475C90A0053A0A3 /* Launch */,
 				7D19727F222D14FF0010CA1C /* Cells */,
-				7D19727E222D14F50010CA1C /* Controller */,
 			);
-			path = UI;
+			path = View;
 			sourceTree = "<group>";
 		};
 		CA52BF6E2475C90A0053A0A3 /* Launch */ = {
