@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControllerDelegate {
     
@@ -38,9 +39,10 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
     
     //ShowDetailsViewController
     func showDetails(_ recipe: Recipe?) {
-        let detailsViewController = DetailsViewController.instantiate()
-        detailsViewController.recipe = recipe
-        navigationController.pushViewController(detailsViewController, animated: true)
+        guard let recipe = recipe else { return }
+        let itemDetailsView = ItemDetailsView(recipe: recipe)
+        let itemHostingView = UIHostingController(rootView: itemDetailsView)
+        navigationController.pushViewController(itemHostingView, animated: true)
     }
     
     //MARK:- UINavigationControllerDelegate
@@ -48,9 +50,9 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
         guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {return}
         if navigationController.viewControllers.contains(fromViewController) {return}
         
-        if let detailsViewController = fromViewController as? DetailsViewController {
-            removeDidFinish(detailsViewController.coordinator)
-        }
+//        if let detailsViewController = fromViewController as? DetailsViewController {
+//            removeDidFinish(detailsViewController.coordinator)
+//        }
     }
     
 }
