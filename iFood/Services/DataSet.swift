@@ -104,7 +104,7 @@ class DataSet {
     }
 }
 
-enum Categories: String {
+enum Categories: String, CaseIterable {
     case burgers = "Burgers"
     case pasta = "Pasta"
     case pizza = "Pizza"
