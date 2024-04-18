@@ -5,8 +5,13 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
     
-    init(navigationController: UINavigationController) {
+    private let state: FoodServiceState
+    private var categoryId: Int?
+    
+    init(navigationController: UINavigationController,
+         state: FoodServiceState) {
         self.navigationController = navigationController
+        self.state = state
     }
     
     func start() {
@@ -16,18 +21,23 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     
     fileprivate func showMenuViewController() {
         let menuViewController = MenuViewController.instantiate()
-        menuViewController.cellAction = { [weak self] id in
-            self?.showSubmenu(id)
+        menuViewController.state = self.state
+        menuViewController.cellAction = { [weak self] categoryId in
+            self?.categoryId = categoryId
+            self?.showCategoryMenu()
         }
         navigationController.pushViewController(menuViewController, animated: true)
     }
     
     //MARK:- MenuProtocol
-    func showSubmenu(_ id: Int) {
-        let child = SubmenuCoordinator(navigationController: navigationController)
+    func showCategoryMenu() {
+        guard let categoryId = self.categoryId else { return }
+        let child = SubmenuCoordinator(navigationController: navigationController,
+                                       state: self.state,
+                                       categoryId: categoryId)
         childCoordinator.append(child)
         child.parentCoordinator = self
-        child.id = id
+//        child.categoryId = categoryId
         child.start()
     }
     

@@ -2,25 +2,32 @@ import UIKit
 import SwiftUI
 
 class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControllerDelegate {
-    
+
     weak var parentCoordinator: MainCoordinator?
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
-    var id: Int!
     
-    init(navigationController: UINavigationController) {
+    let categoryId: Int
+    let state: FoodServiceState
+    
+    init(navigationController: UINavigationController,
+         state: FoodServiceState,
+         categoryId: Int) {
         self.navigationController = navigationController
+        self.state = state
+        self.categoryId = categoryId
     }
     
     func start() {
         navigationController.delegate = self
-        showSubmenu(id)
+        showCategoryMenu()
     }
     
     //MARK:- MenuProtocol
-    func showSubmenu(_ id: Int) {
+    func showCategoryMenu() {
         let submenuViewCntroller = SubmenuViewController.instantiate()
-        submenuViewCntroller.id = id
+        submenuViewCntroller.state = self.state
+        submenuViewCntroller.id = self.categoryId
         submenuViewCntroller.submenuAction = { [weak self] recipe in
             self?.showDetails(recipe)
         }

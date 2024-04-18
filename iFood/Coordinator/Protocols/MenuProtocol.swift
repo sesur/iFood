@@ -1,7 +1,7 @@
 import Foundation
 
 protocol MenuProtocol {
-    func showSubmenu(_ id: Int)
+    func showCategoryMenu()
     func showDetails(_ recipe: Recipe?)
     func removeDidFinish(_ child: Coordinator?)
 }

@@ -3,7 +3,7 @@ import SwiftUI
 
 class SubmenuViewController: UIViewController, Storyboarded {
     
-    let state = FoodServiceState()
+    var state: FoodServiceState?
     weak var coordinator: MainCoordinator?
     var id: Int?
     var food: Food?
@@ -21,7 +21,7 @@ class SubmenuViewController: UIViewController, Storyboarded {
     
     private func getSubmenu(_ id: Int) -> [Recipe] {
         
-        state.loadCategories { [weak self] result in
+        state?.loadCategories { [weak self] result in
             switch result {
             case .success(let food):
                 self?.food = food
