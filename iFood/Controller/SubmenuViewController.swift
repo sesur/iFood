@@ -29,12 +29,7 @@ class SubmenuViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
     
-        let recipes = food?.recipes.compactMap { item in
-            if item.id == id  {
-                return item
-            }
-            return nil
-        }
+        let recipes = food?.recipes.filter { $0.id == id }
         
         return recipes ?? []
     }
