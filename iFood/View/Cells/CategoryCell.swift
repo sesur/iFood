@@ -25,7 +25,7 @@ struct CategoryViewModel {
 extension CategoryViewModel {
     init(_ category: FoodCategory, selection: @escaping () -> Void) {
         image = category.imageName
-        title = category.title.rawValue
+        title = category.title
         select = selection
     }
 }

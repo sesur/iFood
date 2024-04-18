@@ -2,10 +2,10 @@ import UIKit
 
 class MenuDelegate: NSObject {
 
-    private let menu: [CategoryViewModel]
+    private let viewModel: [CategoryViewModel]
     
-    init(tableView: UITableView?, menu: [CategoryViewModel]) {
-        self.menu = menu    
+    init(tableView: UITableView?, viewModel: [CategoryViewModel]) {
+        self.viewModel = viewModel
         super.init()
         tableView?.delegate = self
     }
@@ -17,7 +17,7 @@ extension MenuDelegate: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = menu[indexPath.row]
+        let item = viewModel[indexPath.row]
         item.select()
     }
 }

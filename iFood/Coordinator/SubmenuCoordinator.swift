@@ -6,7 +6,7 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
     weak var parentCoordinator: MainCoordinator?
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
-    var submenuTitle: String!
+    var id: Int!
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -14,13 +14,13 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
     
     func start() {
         navigationController.delegate = self
-        showSubmenu(submenuTitle)
+        showSubmenu(id)
     }
     
     //MARK:- MenuProtocol
-    func showSubmenu(_ tittle: String) {
+    func showSubmenu(_ id: Int) {
         let submenuViewCntroller = SubmenuViewController.instantiate()
-        submenuViewCntroller.submenuItem = tittle
+        submenuViewCntroller.id = id
         submenuViewCntroller.submenuAction = { [weak self] recipe in
             self?.showDetails(recipe)
         }

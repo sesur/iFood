@@ -1,6 +1,7 @@
 import Foundation
 
-struct FoodCategory {
-    let title: Categories
+struct FoodCategory: Codable {
+    let id: Int
+    let title: String
     let imageName: String
 }

@@ -4,7 +4,8 @@ import SwiftUI
 class SubmenuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, Storyboarded {
     
     weak var coordinator: MainCoordinator?
-    var submenuItem: String?
+    var id: Int?
+    var food: Food?
     var submenuArray: [Recipe]?
     var submenuAction: ((Recipe?) -> Void)?
     
@@ -14,11 +15,28 @@ class SubmenuViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        submenuArray = getSubmenu(submenuItem ?? "No value")
+        submenuArray = getSubmenu(id ?? 0)
     }
     
-    fileprivate func getSubmenu(_ item: String) -> [Recipe] {
-        return DataSet().getRecipes(forCategoryTitle: Categories(rawValue: item)!)
+    private func getSubmenu(_ id: Int) -> [Recipe] {
+        let state = StateController()
+        state.loadCategories { [weak self] result in
+            switch result {
+            case .success(let food):
+                self?.food = food
+            case .failure(let error):
+                print(error)
+            }
+        }
+    
+        let recipes = food?.recipes.compactMap { item in
+            if item.id == id  {
+                return item
+            }
+            return nil
+        }
+        
+        return recipes ?? []
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

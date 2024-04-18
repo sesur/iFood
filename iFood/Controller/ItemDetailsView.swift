@@ -40,8 +40,11 @@ struct ItemDetailsView: View {
 }
 
 #Preview {
-    let recipe = Recipe(title: "Title",
-                        instructions: "instructions",
-                        imageName: "imageName")
+    let recipe = Recipe(
+        id: 0,
+        title: "Title",
+        instructions: "instructions",
+        imageName: "imageName"
+    )
     return ItemDetailsView(recipe: recipe)
 }

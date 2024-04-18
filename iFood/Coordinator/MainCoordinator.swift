@@ -16,18 +16,18 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     
     fileprivate func showMenuViewController() {
         let menuViewController = MenuViewController.instantiate()
-        menuViewController.cellAction = { [weak self] title in
-            self?.showSubmenu(title)
+        menuViewController.cellAction = { [weak self] id in
+            self?.showSubmenu(id)
         }
         navigationController.pushViewController(menuViewController, animated: true)
     }
     
     //MARK:- MenuProtocol
-    func showSubmenu(_ tittle: String) {
+    func showSubmenu(_ id: Int) {
         let child = SubmenuCoordinator(navigationController: navigationController)
         childCoordinator.append(child)
         child.parentCoordinator = self
-        child.submenuTitle = tittle
+        child.id = id
         child.start()
     }
     

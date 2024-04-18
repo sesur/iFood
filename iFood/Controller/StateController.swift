@@ -1,7 +1,21 @@
 import UIKit
 
 class StateController {
+
+    public enum Result {
+         case success(Food)
+         case failure(Error)
+     }
     
-    static let data = DataSet()
-    private (set) var items: [FoodCategory] = data.categories
+    func loadCategories(completion: @escaping (Result) -> Void) {
+        FoodService().fetchFood { result in
+            switch result {
+            case .success(let food):
+                completion(.success(food))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
 }

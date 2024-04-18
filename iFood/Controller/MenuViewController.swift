@@ -4,7 +4,7 @@ class MenuViewController: UIViewController, Storyboarded {
     
     @IBOutlet weak var tableview: UITableView!
     
-    var cellAction: ((String) -> Void)?
+    var cellAction: ((Int) -> Void)?
     
     var dataSource: UITableViewDataSource? {
         didSet {
@@ -19,26 +19,63 @@ class MenuViewController: UIViewController, Storyboarded {
         }
     }
     
+    var food: Food?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadContent(state: StateController())
+        
+        let state = StateController()
+        state.loadCategories { [weak self] result in
+            switch result {
+            case .success(let food):
+                self?.food = food
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        if let food {
+            load(food: food)
+        }
     }
     
-    private func loadContent(state: StateController) {
+    private func load(food: Food) {
         let loadingController = LoadingViewController()
         add(loadingController)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self, tableview] in
+        updateMenu(
+            with: food,
+            tableView: self.tableview,
+            loadingController: loadingController
+        )
+    }
+    
+    private func updateMenu(
+        with food: Food,
+        tableView: UITableView,
+        loadingController: LoadingViewController
+    ) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
             loadingController.remove()
-            self?.dataSource = MenuDataSource(menu: state.items.map({ item in
-                CategoryViewModel(item) { }
-            }))
             
-            self?.delegate = MenuDelegate(tableView: tableview, menu: state.items.map({ item in
-                CategoryViewModel(item, selection: {
-                    self?.cellAction?(item.title.rawValue)
-                })
-            }))
+            let categories = food.categories.compactMap { item in
+                CategoryViewModel(image: item.imageName,
+                                  title: item.title,
+                                  select: {  })
+            }
+            
+            self?.dataSource = MenuDataSource(categories: categories)
+            
+            let viewModel = food.categories.compactMap { item in
+                CategoryViewModel(item) {
+                    self?.cellAction?(item.id)
+                }
+            }
+            
+            self?.delegate = MenuDelegate(
+                tableView: tableView,
+                viewModel: viewModel
+            )
         }
     }
 }
