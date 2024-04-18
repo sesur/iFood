@@ -5,7 +5,7 @@ class MenuViewController: UIViewController, Storyboarded {
     @IBOutlet weak var tableview: UITableView!
     
     var cellAction: ((Int) -> Void)?
-    let state = StateServiceState()
+    let state = FoodServiceState()
     
     var dataSource: UITableViewDataSource? {
         didSet {

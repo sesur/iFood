@@ -3,7 +3,7 @@ import SwiftUI
 
 class SubmenuViewController: UIViewController, Storyboarded {
     
-    let state = StateServiceState()
+    let state = FoodServiceState()
     weak var coordinator: MainCoordinator?
     var id: Int?
     var food: Food?
