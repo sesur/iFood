@@ -3,6 +3,7 @@ import SwiftUI
 
 class SubmenuViewController: UIViewController, Storyboarded {
     
+    let state = StateServiceState()
     weak var coordinator: MainCoordinator?
     var id: Int?
     var food: Food?
@@ -19,7 +20,7 @@ class SubmenuViewController: UIViewController, Storyboarded {
     }
     
     private func getSubmenu(_ id: Int) -> [Recipe] {
-        let state = StateController()
+        
         state.loadCategories { [weak self] result in
             switch result {
             case .success(let food):
@@ -33,7 +34,6 @@ class SubmenuViewController: UIViewController, Storyboarded {
         
         return recipes ?? []
     }
-    
 }
 
 extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

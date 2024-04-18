@@ -1,6 +1,6 @@
 import UIKit
 
-class StateController {
+class StateServiceState {
 
     public enum Result {
          case success(Food)

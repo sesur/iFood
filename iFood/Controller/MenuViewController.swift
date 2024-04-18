@@ -5,6 +5,7 @@ class MenuViewController: UIViewController, Storyboarded {
     @IBOutlet weak var tableview: UITableView!
     
     var cellAction: ((Int) -> Void)?
+    let state = StateServiceState()
     
     var dataSource: UITableViewDataSource? {
         didSet {
@@ -23,8 +24,7 @@ class MenuViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let state = StateController()
+    
         state.loadCategories { [weak self] result in
             switch result {
             case .success(let food):
