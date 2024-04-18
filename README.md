@@ -1,11 +1,8 @@
 # iFood
 Food app
 
-#Project evolution
-* Basic and trivial project using Storyboards & Segues.
+#About
+This iOS app provides a collection of recipes for cooking different types of dishes. They may include features such as ingredient lists. 
 
-* Improved project by using Coordinator Pattern, closures and passing data to ViewControllers.
-
-* Refactoring code by adding enumerations
-
-* State controller and loading controller added to project using child view Controller
+#Target
+As a developer, my target is to incrementally develop and update the iFood app, prioritizing best practices, design patterns, and clean architecture. This approach ensures code maintainability, scalability, and adherence to industry standards, ultimately delivering a high-quality user experience.
