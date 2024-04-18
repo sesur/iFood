@@ -24,9 +24,7 @@ class SubmenuViewController: UIViewController, Storyboarded {
     
     private func getRecipes(by id: Int) -> [Recipe]? {
         guard let recipes = state?.retrieveRecipes() else { return nil }
-        
-        let filteredRecipes = recipes.filter({ $0.id == id })
-        return filteredRecipes
+        return recipes.filter({ $0.id == id })
     }
 }
 
