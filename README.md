@@ -1,8 +1,4 @@
 # iFood
-Food app
-
-# About
-
 This iOS app provides a collection of recipes for cooking different types of dishes. They may include features such as ingredient lists. 
 
 # Target
