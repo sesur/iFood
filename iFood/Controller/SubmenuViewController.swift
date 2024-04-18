@@ -1,12 +1,12 @@
 import UIKit
 import SwiftUI
 
-class SubmenuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, Storyboarded {
+class SubmenuViewController: UIViewController, Storyboarded {
     
     weak var coordinator: MainCoordinator?
     var id: Int?
     var food: Food?
-    var submenuArray: [Recipe]?
+    var recipes: [Recipe]?
     var submenuAction: ((Recipe?) -> Void)?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -15,7 +15,7 @@ class SubmenuViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        submenuArray = getSubmenu(id ?? 0)
+        recipes = getSubmenu(id ?? 0)
     }
     
     private func getSubmenu(_ id: Int) -> [Recipe] {
@@ -28,18 +28,22 @@ class SubmenuViewController: UIViewController, UICollectionViewDelegate, UIColle
                 print(error)
             }
         }
-    
+        
         let recipes = food?.recipes.filter { $0.id == id }
         
         return recipes ?? []
     }
     
+}
+
+extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return submenuArray?.count ?? 0
+        return recipes?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let item = submenuArray?[indexPath.item],
+        guard let item = recipes?[indexPath.item],
               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
                                                             for: indexPath) as? SubmenuCell
         else {
@@ -62,7 +66,7 @@ class SubmenuViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let recipe = submenuArray?[indexPath.item]
+        let recipe = recipes?[indexPath.item]
         submenuAction?(recipe)
     }
     
