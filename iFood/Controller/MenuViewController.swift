@@ -24,49 +24,39 @@ class MenuViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        state?.loadCategories { [weak self] result in
-            switch result {
-            case .success(let food):
-                self?.food = food
-            case .failure(let error):
-                print(error)
-            }
-        }
-        
-        if let food {
-            load(food: food)
+        if let categories = state?.retrieveCategories() {
+            load(categories: categories)
         }
     }
     
-    private func load(food: Food) {
+    private func load(categories: [FoodCategory]) {
         let loadingController = LoadingViewController()
         add(loadingController)
         
         updateMenu(
-            with: food,
+            with: categories,
             tableView: self.tableview,
             loadingController: loadingController
         )
     }
     
     private func updateMenu(
-        with food: Food,
+        with categories: [FoodCategory],
         tableView: UITableView,
         loadingController: LoadingViewController
     ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
             loadingController.remove()
             
-            let categories = food.categories.compactMap { item in
+            let menuCategories = categories.compactMap { item in
                 CategoryViewModel(image: item.imageName,
                                   title: item.title,
                                   select: {  })
             }
             
-            self?.dataSource = MenuDataSource(categories: categories)
+            self?.dataSource = MenuDataSource(categories: menuCategories)
             
-            let viewModel = food.categories.compactMap { item in
+            let viewModel = categories.compactMap { item in
                 CategoryViewModel(item) {
                     self?.cellAction?(item.id)
                 }

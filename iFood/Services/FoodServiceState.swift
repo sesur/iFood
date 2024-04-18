@@ -1,21 +1,26 @@
 import UIKit
 
-class FoodServiceState {
+protocol FoodCategoryProtocol {
+    func retrieveCategories() -> [FoodCategory]
+}
 
-    public enum Result {
-         case success(Food)
-         case failure(Error)
-     }
+protocol FoodRecipeProtocol {
+    func retrieveRecipes() -> [Recipe]
+}
+
+class FoodServiceState: FoodCategoryProtocol, FoodRecipeProtocol {
+ 
+    let service: FoodServiceComposer
     
-    func loadCategories(completion: @escaping (Result) -> Void) {
-        FoodService().fetchFood { result in
-            switch result {
-            case .success(let food):
-                completion(.success(food))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    init(service: FoodServiceComposer) {
+        self.service = service
     }
     
+    func retrieveCategories() -> [FoodCategory] {
+        service.getCategories()
+    }
+    
+    func retrieveRecipes() -> [Recipe] {
+        service.getRecipes()
+    }
 }

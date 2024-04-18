@@ -1,12 +1,10 @@
 import UIKit
 import SwiftUI
 
-class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControllerDelegate {
+class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
 
     weak var parentCoordinator: MainCoordinator?
-    var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
-    
     let categoryId: Int
     let state: FoodServiceState
     
@@ -19,7 +17,6 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
     }
     
     func start() {
-        navigationController.delegate = self
         showCategoryMenu()
     }
     
@@ -34,16 +31,7 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
         
         navigationController.pushViewController(submenuViewCntroller, animated: true)
     }
-    
-    func removeDidFinish(_ child: Coordinator?) {
-        for (index, coordinator) in childCoordinator.enumerated() {
-            if child === coordinator {
-                childCoordinator.remove(at: index)
-                break
-            }
-        }
-    }
-    
+     
     //ShowDetailsViewController
     func showDetails(_ recipe: Recipe?) {
         guard let recipe = recipe else { return }
@@ -51,15 +39,4 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationContr
         let itemHostingView = UIHostingController(rootView: itemDetailsView)
         navigationController.pushViewController(itemHostingView, animated: true)
     }
-    
-    //MARK:- UINavigationControllerDelegate
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {return}
-        if navigationController.viewControllers.contains(fromViewController) {return}
-        
-//        if let detailsViewController = fromViewController as? DetailsViewController {
-//            removeDidFinish(detailsViewController.coordinator)
-//        }
-    }
-    
 }

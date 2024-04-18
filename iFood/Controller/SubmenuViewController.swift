@@ -7,7 +7,7 @@ class SubmenuViewController: UIViewController, Storyboarded {
     weak var coordinator: MainCoordinator?
     var id: Int?
     var food: Food?
-    var recipes: [Recipe]?
+    var recipes = [Recipe]()
     var submenuAction: ((Recipe?) -> Void)?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -16,35 +16,29 @@ class SubmenuViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        recipes = getSubmenu(id ?? 0)
+        guard let categoryId = self.id,
+            let recipes = getRecipes(by: categoryId) else { return }
+        self.recipes = recipes
+        
     }
     
-    private func getSubmenu(_ id: Int) -> [Recipe] {
+    private func getRecipes(by id: Int) -> [Recipe]? {
+        guard let recipes = state?.retrieveRecipes() else { return nil }
         
-        state?.loadCategories { [weak self] result in
-            switch result {
-            case .success(let food):
-                self?.food = food
-            case .failure(let error):
-                print(error)
-            }
-        }
-        
-        let recipes = food?.recipes.filter { $0.id == id }
-        
-        return recipes ?? []
+        let filteredRecipes = recipes.filter({ $0.id == id })
+        return filteredRecipes
     }
 }
 
 extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recipes?.count ?? 0
+        return recipes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let item = recipes?[indexPath.item],
-              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
+        let item = recipes[indexPath.item]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
                                                             for: indexPath) as? SubmenuCell
         else {
             return UICollectionViewCell()
@@ -66,7 +60,7 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let recipe = recipes?[indexPath.item]
+        let recipe = recipes[indexPath.item]
         submenuAction?(recipe)
     }
     

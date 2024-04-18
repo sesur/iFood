@@ -15,17 +15,15 @@ struct SubmenuView: View {
                 .imageScale(.large)
 
             linearGradient
-            
-            VStack(alignment: .leading) {
-                Spacer()
-                Text(viewModel.title)
-                    .foregroundStyle(.white)
-                    .font(.title3)
-            }
-            .padding(EdgeInsets(top: 0, leading: 6, bottom: 6, trailing: 0))
+                .overlay(alignment: .bottomLeading) {
+                    Text(viewModel.title)
+                        .foregroundStyle(.white)
+                        .font(.title3)
+                        .padding(.all, 6)
+                }
         }
         .cornerRadius(10)
-        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .padding(.all, 0)
     }
 }
 

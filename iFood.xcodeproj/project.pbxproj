@@ -14,7 +14,7 @@
 		7D197276222D14D50010CA1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D197274222D14D50010CA1C /* LaunchScreen.storyboard */; };
 		7D197281222D15220010CA1C /* FoodCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D197280222D15220010CA1C /* FoodCategory.swift */; };
 		7D197283222D15970010CA1C /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D197282222D15970010CA1C /* Recipe.swift */; };
-		7D197285222D15E70010CA1C /* FoodService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D197284222D15E70010CA1C /* FoodService.swift */; };
+		7D197285222D15E70010CA1C /* FoodServiceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D197284222D15E70010CA1C /* FoodServiceComposer.swift */; };
 		7D1972A9222E6B0E0010CA1C /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1972A8222E6B0E0010CA1C /* CategoryCell.swift */; };
 		7D1972AB222FAEB90010CA1C /* SubmenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1972AA222FAEB90010CA1C /* SubmenuViewController.swift */; };
 		7D1972AD222FB36A0010CA1C /* SubmenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1972AC222FB36A0010CA1C /* SubmenuCell.swift */; };
@@ -42,7 +42,7 @@
 		7D197277222D14D50010CA1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D197280222D15220010CA1C /* FoodCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategory.swift; sourceTree = "<group>"; };
 		7D197282222D15970010CA1C /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
-		7D197284222D15E70010CA1C /* FoodService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodService.swift; sourceTree = "<group>"; };
+		7D197284222D15E70010CA1C /* FoodServiceComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodServiceComposer.swift; sourceTree = "<group>"; };
 		7D1972A8222E6B0E0010CA1C /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		7D1972AA222FAEB90010CA1C /* SubmenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmenuViewController.swift; sourceTree = "<group>"; };
 		7D1972AC222FB36A0010CA1C /* SubmenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmenuCell.swift; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				7D8722FF2BCFBCD10073AB19 /* Food.json */,
-				7D197284222D15E70010CA1C /* FoodService.swift */,
+				7D197284222D15E70010CA1C /* FoodServiceComposer.swift */,
 				7D77CE7722FA731E00FFDBED /* FoodServiceState.swift */,
 			);
 			path = Services;
@@ -266,7 +266,7 @@
 			files = (
 				7D197283222D15970010CA1C /* Recipe.swift in Sources */,
 				7D65E6A122EC0BD100E768E7 /* MainCoordinator.swift in Sources */,
-				7D197285222D15E70010CA1C /* FoodService.swift in Sources */,
+				7D197285222D15E70010CA1C /* FoodServiceComposer.swift in Sources */,
 				7D65E69D22EC080200E768E7 /* Coordinator.swift in Sources */,
 				7D65E6A522F1305C00E768E7 /* SubmenuCoordinator.swift in Sources */,
 				7D77CE7422F91F9300FFDBED /* MenuDataSource.swift in Sources */,

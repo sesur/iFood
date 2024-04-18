@@ -35,9 +35,8 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
         let child = SubmenuCoordinator(navigationController: navigationController,
                                        state: self.state,
                                        categoryId: categoryId)
-        childCoordinator.append(child)
+        childCoordinator = [child]
         child.parentCoordinator = self
-//        child.categoryId = categoryId
         child.start()
     }
     
