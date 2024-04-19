@@ -17,14 +17,9 @@ class SubmenuViewController: UIViewController, Storyboarded {
         collectionView.delegate = self
         collectionView.dataSource = self
         guard let categoryId = self.id,
-            let recipes = getRecipes(by: categoryId) else { return }
-        self.recipes = recipes
+              let recipes = state?.retrieveRecipes(with: categoryId) else { return }
+        self.recipes = recipes.filter { $0.id == id }
         
-    }
-    
-    private func getRecipes(by id: Int) -> [Recipe]? {
-        guard let recipes = state?.retrieveRecipes() else { return nil }
-        return recipes.filter({ $0.id == id })
     }
 }
 

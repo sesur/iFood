@@ -5,7 +5,7 @@ protocol FoodCategoryProtocol {
 }
 
 protocol FoodRecipeProtocol {
-    func retrieveRecipes() -> [Recipe]
+    func retrieveRecipes(with id: Int) -> [Recipe]
 }
 
 class FoodServiceState: FoodCategoryProtocol, FoodRecipeProtocol {
@@ -20,7 +20,7 @@ class FoodServiceState: FoodCategoryProtocol, FoodRecipeProtocol {
         service.getCategories()
     }
     
-    func retrieveRecipes() -> [Recipe] {
+    func retrieveRecipes(with id: Int) -> [Recipe] {
         service.getRecipes()
     }
 }
