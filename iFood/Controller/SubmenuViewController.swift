@@ -1,14 +1,25 @@
 import UIKit
 import SwiftUI
 
+struct ItemProperties {
+    let id: Int
+    let recipe: Recipe?
+    var submenuAction: ((ItemProperties) -> Void)?
+    
+    init(id: Int,
+         recipe: Recipe? = nil,
+         submenuAction: ((ItemProperties) -> Void)? = nil) {
+        self.id = id
+        self.recipe = recipe
+        self.submenuAction = submenuAction
+    }
+}
+
 class SubmenuViewController: UIViewController, Storyboarded {
     
-    var state: FoodServiceState?
     weak var coordinator: MainCoordinator?
-    var id: Int?
-    var food: Food?
+    var itemProperties: ItemProperties?
     var recipes = [Recipe]()
-    var submenuAction: ((Recipe?) -> Void)?
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -16,10 +27,6 @@ class SubmenuViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        guard let categoryId = self.id,
-              let recipes = state?.retrieveRecipes(with: categoryId) else { return }
-        self.recipes = recipes.filter { $0.id == id }
-        
     }
 }
 
@@ -54,7 +61,9 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let recipe = recipes[indexPath.item]
-        submenuAction?(recipe)
+        guard let properties = itemProperties else { return }
+        let item = ItemProperties(id: properties.id, recipe: recipe)
+        properties.submenuAction?(item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

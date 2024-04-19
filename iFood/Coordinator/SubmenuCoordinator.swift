@@ -23,10 +23,13 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
     //MARK:- MenuProtocol
     func showCategoryMenu() {
         let submenuViewCntroller = SubmenuViewController.instantiate()
-        submenuViewCntroller.state = self.state
-        submenuViewCntroller.id = self.categoryId
-        submenuViewCntroller.submenuAction = { [weak self] recipe in
-            self?.showDetails(recipe)
+        let recipes = state.retrieveRecipes(with: categoryId)
+        
+        submenuViewCntroller.recipes = recipes
+        submenuViewCntroller.itemProperties = ItemProperties(id: categoryId)
+    
+        submenuViewCntroller.itemProperties?.submenuAction = { [weak self] item in
+            self?.showDetails(item.recipe)
         }
         
         navigationController.pushViewController(submenuViewCntroller, animated: true)

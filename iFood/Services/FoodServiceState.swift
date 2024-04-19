@@ -21,6 +21,7 @@ class FoodServiceState: FoodCategoryProtocol, FoodRecipeProtocol {
     }
     
     func retrieveRecipes(with id: Int) -> [Recipe] {
-        service.getRecipes()
+        let recipes = service.getRecipes()
+        return recipes.filter { $0.id == id }
     }
 }
