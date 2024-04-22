@@ -48,6 +48,14 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
 struct SubmenuViewModel {
     var properties: ItemProperties
     let recipes: [Recipe]
+    
+    func recipeViewModels() -> [RecipeViewModel] {
+        return recipes.map { recipe in
+            RecipeViewModel(title: recipe.title,
+                            instructions: recipe.instructions,
+                            imageName: recipe.imageName)
+        }
+    }
 }
 
 struct ItemProperties {
@@ -59,4 +67,10 @@ struct ItemProperties {
         self.id = id
         self.submenuAction = submenuAction
     }
+}
+
+struct RecipeViewModel {
+    let title: String
+    let instructions: String
+    let imageName: String
 }

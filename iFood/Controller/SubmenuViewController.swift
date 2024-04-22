@@ -23,7 +23,7 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let item = viewModel?.recipes[indexPath.item],
+        guard let viewModel = viewModel?.recipeViewModels()[indexPath.item],
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
                                                             for: indexPath) as? SubmenuCell
         else {
@@ -31,9 +31,6 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
 
         cell.contentConfiguration = UIHostingConfiguration {
-            let viewModel = RecipeViewModel(title: item.title,
-                                            instructions: item.instructions,
-                                            imageName: item.imageName)
             SubmenuView(viewModel: viewModel)
         }
         return cell
@@ -58,10 +55,4 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-}
-
-struct RecipeViewModel {
-    let title: String
-    let instructions: String
-    let imageName: String
 }
