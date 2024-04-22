@@ -1,25 +1,10 @@
 import UIKit
 import SwiftUI
 
-struct ItemProperties {
-    let id: Int
-    let recipe: Recipe?
-    var submenuAction: ((ItemProperties) -> Void)?
-    
-    init(id: Int,
-         recipe: Recipe? = nil,
-         submenuAction: ((ItemProperties) -> Void)? = nil) {
-        self.id = id
-        self.recipe = recipe
-        self.submenuAction = submenuAction
-    }
-}
-
 class SubmenuViewController: UIViewController, Storyboarded {
     
     weak var coordinator: MainCoordinator?
-    var itemProperties: ItemProperties?
-    var recipes = [Recipe]()
+    var viewModel: SubmenuViewModel?
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -33,12 +18,13 @@ class SubmenuViewController: UIViewController, Storyboarded {
 extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recipes.count
+        return viewModel?.recipes.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = recipes[indexPath.item]
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
+        
+        guard let item = viewModel?.recipes[indexPath.item],
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
                                                             for: indexPath) as? SubmenuCell
         else {
             return UICollectionViewCell()
@@ -60,10 +46,9 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let recipe = recipes[indexPath.item]
-        guard let properties = itemProperties else { return }
-        let item = ItemProperties(id: properties.id, recipe: recipe)
-        properties.submenuAction?(item)
+        guard let viewModel = viewModel else { return }
+        let item = viewModel.recipes[indexPath.item]
+        viewModel.properties.submenuAction?(item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
