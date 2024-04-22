@@ -21,7 +21,8 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     
     fileprivate func showMenuViewController() {
         let menuViewController = MenuViewController.instantiate()
-        menuViewController.state = self.state
+        menuViewController.categories = state.service.getCategories()
+        
         menuViewController.cellAction = { [weak self] categoryId in
             self?.categoryId = categoryId
             self?.showCategoryMenu()

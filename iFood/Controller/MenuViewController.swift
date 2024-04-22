@@ -5,7 +5,7 @@ class MenuViewController: UIViewController, Storyboarded {
     @IBOutlet weak var tableview: UITableView!
     
     var cellAction: ((Int) -> Void)?
-    var state: FoodServiceState?
+    var categories: [FoodCategory]?
     
     var dataSource: UITableViewDataSource? {
         didSet {
@@ -20,11 +20,9 @@ class MenuViewController: UIViewController, Storyboarded {
         }
     }
     
-    var food: Food?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let categories = state?.retrieveCategories() {
+        if let categories {
             load(categories: categories)
         }
     }
