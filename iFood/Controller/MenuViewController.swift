@@ -4,8 +4,7 @@ class MenuViewController: UIViewController, Storyboarded {
     
     @IBOutlet weak var tableview: UITableView!
     
-    var cellAction: ((Int) -> Void)?
-    var categories: [FoodCategory]?
+    var viewModel: MenuViewModel?
     
     var dataSource: UITableViewDataSource? {
         didSet {
@@ -22,48 +21,36 @@ class MenuViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let categories {
-            load(categories: categories)
+        if let viewModel {
+            load(viewModel: viewModel)
         }
     }
     
-    private func load(categories: [FoodCategory]) {
+    private func load(viewModel: MenuViewModel) {
         let loadingController = LoadingViewController()
         add(loadingController)
         
         updateMenu(
-            with: categories,
+            with: viewModel,
             tableView: self.tableview,
             loadingController: loadingController
         )
     }
     
     private func updateMenu(
-        with categories: [FoodCategory],
+        with viewModel: MenuViewModel,
         tableView: UITableView,
         loadingController: LoadingViewController
     ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
             loadingController.remove()
             
-            let menuCategories = categories.compactMap { item in
-                CategoryViewModel(image: item.imageName,
-                                  title: item.title,
-                                  select: {  })
+            let items = viewModel.categories
+
+            if !items.isEmpty {
+                self?.dataSource = MenuDataSource(items: items)
+                self?.delegate = MenuDelegate(tableView: tableView, items: items)
             }
-            
-            self?.dataSource = MenuDataSource(categories: menuCategories)
-            
-            let viewModel = categories.compactMap { item in
-                CategoryViewModel(item) {
-                    self?.cellAction?(item.id)
-                }
-            }
-            
-            self?.delegate = MenuDelegate(
-                tableView: tableView,
-                viewModel: viewModel
-            )
         }
     }
 }

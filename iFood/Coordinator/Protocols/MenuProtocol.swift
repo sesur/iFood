@@ -1,11 +1,15 @@
 import Foundation
 
 protocol MenuProtocol {
-    func showCategoryMenu()
     func showDetails(_ recipe: Recipe?)
 }
 
 extension MenuProtocol {
+    
+    func showMenu(id: Int) {
+        
+    }
+    
     func showDetails(_ recipe: Recipe?) {
         
     }

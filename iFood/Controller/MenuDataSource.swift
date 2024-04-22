@@ -2,21 +2,28 @@ import UIKit
 
 class MenuDataSource: NSObject, UITableViewDataSource {
     
-    private let categories: [CategoryViewModel]
+    private let items: [MenuItemViewModel]
     private let reuseIdentifier = "cellCategory"
     
-    init(categories: [CategoryViewModel]) {
-        self.categories = categories
+    init(items: [MenuItemViewModel]) {
+        self.items = items
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = self.categories[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! CategoryCell
+        
+        guard !items.isEmpty,
+              let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? CategoryCell else
+        {
+            return UITableViewCell()
+        }
+        
+        let item = self.items[indexPath.row]
         cell.configure(item)
+        
         return cell
     }
 }

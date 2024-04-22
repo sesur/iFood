@@ -6,7 +6,6 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     var navigationController: UINavigationController
     
     private let state: FoodServiceState
-    private var categoryId: Int?
     
     init(navigationController: UINavigationController,
          state: FoodServiceState) {
@@ -21,21 +20,29 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     
     fileprivate func showMenuViewController() {
         let menuViewController = MenuViewController.instantiate()
-        menuViewController.categories = state.service.getCategories()
-        
-        menuViewController.cellAction = { [weak self] categoryId in
-            self?.categoryId = categoryId
-            self?.showCategoryMenu()
+
+        let categories = state.service.getCategories().map { category in
+            MenuItemViewModel(title: category.title,
+                              imageName: category.imageName,
+                              select: { [weak self] id in
+                self?.showMenu(id: id)
+            })
         }
+        
+        let properties = MenuProperties()
+        let viewModel = MenuViewModel(properties: properties,
+                                      categories: categories)
+        
+        menuViewController.viewModel = viewModel
+        
         navigationController.pushViewController(menuViewController, animated: true)
     }
     
     //MARK:- MenuProtocol
-    func showCategoryMenu() {
-        guard let categoryId = self.categoryId else { return }
+    func showMenu(id: Int) {
         let child = SubmenuCoordinator(navigationController: navigationController,
                                        state: self.state,
-                                       categoryId: categoryId)
+                                       categoryId: id)
         childCoordinator = [child]
         child.parentCoordinator = self
         child.start()
@@ -59,4 +66,26 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
             removeDidFinish(menuViewController.coordinator)
         }
     }
+}
+
+struct MenuViewModel {
+    var properties: MenuProperties
+    let categories: [MenuItemViewModel]
+}
+
+struct MenuProperties {
+    var id: Int?
+    var submenuAction: ((MenuItemViewModel) -> Void)?
+    
+    init(id: Int? = nil,
+         submenuAction: ((MenuItemViewModel) -> Void)? = nil) {
+        self.id = id
+        self.submenuAction = submenuAction
+    }
+}
+
+struct MenuItemViewModel {
+    let title: String
+    let imageName: String
+    let select: (Int) -> Void
 }
