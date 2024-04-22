@@ -21,19 +21,16 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     fileprivate func showMenuViewController() {
         let menuViewController = MenuViewController.instantiate()
 
-        let categories = state.service.getCategories().map { category in
-            MenuItemViewModel(title: category.title,
+        let items = state.service.getCategories().map { category in
+            MenuItemViewModel(id: nil,
+                              title: category.title,
                               imageName: category.imageName,
                               select: { [weak self] id in
                 self?.showMenu(id: id)
             })
         }
         
-        let properties = MenuProperties()
-        let viewModel = MenuViewModel(properties: properties,
-                                      categories: categories)
-        
-        menuViewController.viewModel = viewModel
+        menuViewController.items = items
         
         navigationController.pushViewController(menuViewController, animated: true)
     }
@@ -68,23 +65,8 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     }
 }
 
-struct MenuViewModel {
-    var properties: MenuProperties
-    let categories: [MenuItemViewModel]
-}
-
-struct MenuProperties {
-    var id: Int?
-    var submenuAction: ((MenuItemViewModel) -> Void)?
-    
-    init(id: Int? = nil,
-         submenuAction: ((MenuItemViewModel) -> Void)? = nil) {
-        self.id = id
-        self.submenuAction = submenuAction
-    }
-}
-
 struct MenuItemViewModel {
+    let id: Int?
     let title: String
     let imageName: String
     let select: (Int) -> Void

@@ -40,10 +40,10 @@ struct ItemDetailsView: View {
 }
 
 #Preview {
-    let viewModel = RecipeViewModel(
-        title: "Title",
-        instructions: "instructions",
-        imageName: "imageName"
-    )
+    let viewModel = RecipeViewModel(id: 0,
+                                    title: "Title",
+                                    instructions: "instructions",
+                                    imageName: "imageName",
+                                    select: { _ in })
     return ItemDetailsView(viewModel: viewModel)
 }

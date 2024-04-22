@@ -25,21 +25,17 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
         let submenuViewCntroller = SubmenuViewController.instantiate()
         let recipes = state.retrieveRecipes(with: categoryId)
         
-        let properties = ItemProperties(id: categoryId)
-        
-        let recipesViewModel = recipes.map { recipe in
-                RecipeViewModel(title: recipe.title,
-                                instructions: recipe.instructions,
-                                imageName: recipe.imageName)
+        let items = recipes.map { item in
+            RecipeViewModel(id: categoryId,
+                            title: item.title,
+                            instructions: item.instructions,
+                            imageName: item.imageName, 
+                            select: { [weak self] viewModel in
+                self?.showDetails(viewModel)
+            })
         }
         
-        let viewModel = SubmenuViewModel(properties: properties, recipes: recipesViewModel)
-        
-        submenuViewCntroller.viewModel = viewModel
-        submenuViewCntroller.viewModel?.properties.submenuAction = { [weak self] item in
-            self?.showDetails(item)
-        }
-        
+        submenuViewCntroller.items = items
         navigationController.pushViewController(submenuViewCntroller, animated: true)
     }
      
@@ -51,24 +47,10 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
     }
 }
 
-struct SubmenuViewModel {
-    var properties: ItemProperties
-    let recipes: [RecipeViewModel]
-}
-
-struct ItemProperties {
-    let id: Int
-    var submenuAction: ((RecipeViewModel) -> Void)?
-    
-    init(id: Int,
-         submenuAction: ((RecipeViewModel) -> Void)? = nil) {
-        self.id = id
-        self.submenuAction = submenuAction
-    }
-}
-
 struct RecipeViewModel {
+    let id: Int
     let title: String
     let instructions: String
     let imageName: String
+    let select: (Self) -> Void
 }

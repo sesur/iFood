@@ -4,7 +4,7 @@ import SwiftUI
 class SubmenuViewController: UIViewController, Storyboarded {
     
     weak var coordinator: MainCoordinator?
-    var viewModel: SubmenuViewModel?
+    var items: [RecipeViewModel]?
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -18,12 +18,12 @@ class SubmenuViewController: UIViewController, Storyboarded {
 extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.recipes.count ?? 0
+        return items?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let viewModel = viewModel?.recipes[indexPath.item],
+        guard let viewModel = items?[indexPath.item],
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
                                                             for: indexPath) as? SubmenuCell
         else {
@@ -43,9 +43,9 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let viewModel = viewModel else { return }
-        let item = viewModel.recipes[indexPath.item]
-        viewModel.properties.submenuAction?(item)
+        guard let items = items else { return }
+        let item = items[indexPath.item]
+        item.select(item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

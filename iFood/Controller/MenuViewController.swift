@@ -4,7 +4,7 @@ class MenuViewController: UIViewController, Storyboarded {
     
     @IBOutlet weak var tableview: UITableView!
     
-    var viewModel: MenuViewModel?
+    var items: [MenuItemViewModel]?
     
     var dataSource: UITableViewDataSource? {
         didSet {
@@ -21,31 +21,29 @@ class MenuViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let viewModel {
-            load(viewModel: viewModel)
+        if let items {
+            load(items: items)
         }
     }
     
-    private func load(viewModel: MenuViewModel) {
+    private func load(items: [MenuItemViewModel]) {
         let loadingController = LoadingViewController()
         add(loadingController)
         
         updateMenu(
-            with: viewModel,
+            with: items,
             tableView: self.tableview,
             loadingController: loadingController
         )
     }
     
     private func updateMenu(
-        with viewModel: MenuViewModel,
+        with items: [MenuItemViewModel],
         tableView: UITableView,
         loadingController: LoadingViewController
     ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
             loadingController.remove()
-            
-            let items = viewModel.categories
 
             if !items.isEmpty {
                 self?.dataSource = MenuDataSource(items: items)
