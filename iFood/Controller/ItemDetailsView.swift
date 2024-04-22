@@ -2,16 +2,16 @@ import SwiftUI
 
 struct ItemDetailsView: View {
     
-    let recipe: Recipe
+    let viewModel: RecipeViewModel
     
-    init(recipe: Recipe) {
-        self.recipe = recipe
+    init(viewModel: RecipeViewModel) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
         VStack {
             ZStack {
-                Image(recipe.imageName)
+                Image(viewModel.imageName)
                     .resizable()
                     .imageScale(.medium)
                 
@@ -23,13 +23,13 @@ struct ItemDetailsView: View {
             .edgesIgnoringSafeArea(.top)
             
             
-            Text(recipe.title)
+            Text(viewModel.title)
                 .font(.title2)
                 .foregroundStyle(.black)
                 .padding(.all, 16)
             
             VStack {
-                Text(recipe.instructions)
+                Text(viewModel.instructions)
                     .font(.subheadline)
                     .foregroundStyle(.gray)
                 Spacer()
@@ -40,11 +40,10 @@ struct ItemDetailsView: View {
 }
 
 #Preview {
-    let recipe = Recipe(
-        id: 0,
+    let viewModel = RecipeViewModel(
         title: "Title",
         instructions: "instructions",
         imageName: "imageName"
     )
-    return ItemDetailsView(recipe: recipe)
+    return ItemDetailsView(viewModel: viewModel)
 }

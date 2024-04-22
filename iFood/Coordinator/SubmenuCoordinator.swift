@@ -26,7 +26,14 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
         let recipes = state.retrieveRecipes(with: categoryId)
         
         let properties = ItemProperties(id: categoryId)
-        let viewModel = SubmenuViewModel(properties: properties, recipes: recipes)
+        
+        let recipesViewModel = recipes.map { recipe in
+                RecipeViewModel(title: recipe.title,
+                                instructions: recipe.instructions,
+                                imageName: recipe.imageName)
+        }
+        
+        let viewModel = SubmenuViewModel(properties: properties, recipes: recipesViewModel)
         
         submenuViewCntroller.viewModel = viewModel
         submenuViewCntroller.viewModel?.properties.submenuAction = { [weak self] item in
@@ -37,9 +44,8 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
     }
      
     //ShowDetailsViewController
-    func showDetails(_ recipe: Recipe?) {
-        guard let recipe = recipe else { return }
-        let itemDetailsView = ItemDetailsView(recipe: recipe)
+    func showDetails(_ viewModel: RecipeViewModel) {
+        let itemDetailsView = ItemDetailsView(viewModel: viewModel)
         let itemHostingView = UIHostingController(rootView: itemDetailsView)
         navigationController.pushViewController(itemHostingView, animated: true)
     }
@@ -47,23 +53,15 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
 
 struct SubmenuViewModel {
     var properties: ItemProperties
-    let recipes: [Recipe]
-    
-    func recipeViewModels() -> [RecipeViewModel] {
-        return recipes.map { recipe in
-            RecipeViewModel(title: recipe.title,
-                            instructions: recipe.instructions,
-                            imageName: recipe.imageName)
-        }
-    }
+    let recipes: [RecipeViewModel]
 }
 
 struct ItemProperties {
     let id: Int
-    var submenuAction: ((Recipe) -> Void)?
+    var submenuAction: ((RecipeViewModel) -> Void)?
     
     init(id: Int,
-         submenuAction: ((Recipe) -> Void)? = nil) {
+         submenuAction: ((RecipeViewModel) -> Void)? = nil) {
         self.id = id
         self.submenuAction = submenuAction
     }

@@ -23,7 +23,7 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let viewModel = viewModel?.recipeViewModels()[indexPath.item],
+        guard let viewModel = viewModel?.recipes[indexPath.item],
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "submenuCell",
                                                             for: indexPath) as? SubmenuCell
         else {
