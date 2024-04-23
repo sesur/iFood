@@ -3,7 +3,7 @@ import SwiftUI
 
 class SubmenuViewController: UIViewController, Storyboarded {
     
-    weak var coordinator: MainCoordinator?
+    weak var coordinator: SubmenuCoordinator?
     var items: [RecipeViewModel]?
     
     @IBOutlet weak var collectionView: UICollectionView!

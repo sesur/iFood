@@ -22,6 +22,8 @@ class SubmenuCoordinator: NSObject, Coordinator {
     
     private func displaySubmenu() {
         let submenuViewCntroller = SubmenuViewController.instantiate()
+        submenuViewCntroller.coordinator = self
+        
         let recipes = state.retrieveRecipes(with: categoryId)
         
         let items = recipes.map { item in
@@ -42,6 +44,10 @@ class SubmenuCoordinator: NSObject, Coordinator {
         let itemDetailsView = ItemDetailsView(viewModel: viewModel)
         let itemHostingView = UIHostingController(rootView: itemDetailsView)
         navigationController.pushViewController(itemHostingView, animated: true)
+    }
+    
+    deinit {
+        print("deinit -> SubmenuCoordinator")
     }
 }
 
