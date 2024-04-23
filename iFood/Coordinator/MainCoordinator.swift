@@ -1,6 +1,6 @@
 import UIKit
 
-class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControllerDelegate {
+class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
@@ -15,37 +15,35 @@ class MainCoordinator: NSObject, Coordinator, MenuProtocol, UINavigationControll
     
     func start() {
         navigationController.delegate = self
-        showMenuViewController()
+        displayMenu()
     }
     
-    fileprivate func showMenuViewController() {
+    private func displayMenu() {
         let menuViewController = MenuViewController.instantiate()
-
+        
         let items = state.service.getCategories().map { category in
             MenuItemViewModel(id: nil,
                               title: category.title,
                               imageName: category.imageName,
                               select: { [weak self] id in
-                self?.showMenu(id: id)
+                self?.startSubmenuCoordinator(with: id)
             })
         }
         
         menuViewController.items = items
-        
         navigationController.pushViewController(menuViewController, animated: true)
     }
     
-    //MARK:- MenuProtocol
-    func showMenu(id: Int) {
+    private func startSubmenuCoordinator(with categoryId: Int) {
         let child = SubmenuCoordinator(navigationController: navigationController,
                                        state: self.state,
-                                       categoryId: id)
+                                       categoryId: categoryId)
         childCoordinator = [child]
         child.parentCoordinator = self
         child.start()
     }
     
-    func removeDidFinish(_ child: Coordinator?) {
+    private func removeDidFinish(_ child: Coordinator?) {
         for (index, coordinator) in childCoordinator.enumerated() {
             if coordinator === child {
                 childCoordinator.remove(at: index)

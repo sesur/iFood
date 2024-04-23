@@ -21,7 +21,6 @@
 		7D65E69D22EC080200E768E7 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65E69C22EC080200E768E7 /* Coordinator.swift */; };
 		7D65E69F22EC08E200E768E7 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65E69E22EC08E200E768E7 /* Storyboarded.swift */; };
 		7D65E6A122EC0BD100E768E7 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65E6A022EC0BD100E768E7 /* MainCoordinator.swift */; };
-		7D65E6A322EC0FBC00E768E7 /* MenuProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65E6A222EC0FBC00E768E7 /* MenuProtocol.swift */; };
 		7D65E6A522F1305C00E768E7 /* SubmenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65E6A422F1305C00E768E7 /* SubmenuCoordinator.swift */; };
 		7D6C5C192BC71CA2003A985B /* SubmenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6C5C182BC71CA2003A985B /* SubmenuView.swift */; };
 		7D77CE7422F91F9300FFDBED /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77CE7322F91F9300FFDBED /* MenuDataSource.swift */; };
@@ -49,7 +48,6 @@
 		7D65E69C22EC080200E768E7 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		7D65E69E22EC08E200E768E7 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		7D65E6A022EC0BD100E768E7 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
-		7D65E6A222EC0FBC00E768E7 /* MenuProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProtocol.swift; sourceTree = "<group>"; };
 		7D65E6A422F1305C00E768E7 /* SubmenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmenuCoordinator.swift; sourceTree = "<group>"; };
 		7D6C5C182BC71CA2003A985B /* SubmenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmenuView.swift; sourceTree = "<group>"; };
 		7D77CE7322F91F9300FFDBED /* MenuDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 			children = (
 				7D65E69C22EC080200E768E7 /* Coordinator.swift */,
 				7D65E69E22EC08E200E768E7 /* Storyboarded.swift */,
-				7D65E6A222EC0FBC00E768E7 /* MenuProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -270,7 +267,6 @@
 				7D65E69D22EC080200E768E7 /* Coordinator.swift in Sources */,
 				7D65E6A522F1305C00E768E7 /* SubmenuCoordinator.swift in Sources */,
 				7D77CE7422F91F9300FFDBED /* MenuDataSource.swift in Sources */,
-				7D65E6A322EC0FBC00E768E7 /* MenuProtocol.swift in Sources */,
 				7D19726E222D14D30010CA1C /* MenuViewController.swift in Sources */,
 				7D1972AD222FB36A0010CA1C /* SubmenuCell.swift in Sources */,
 				7D1972AB222FAEB90010CA1C /* SubmenuViewController.swift in Sources */,

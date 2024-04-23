@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 
-class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
+class SubmenuCoordinator: NSObject, Coordinator {
 
     weak var parentCoordinator: MainCoordinator?
     var navigationController: UINavigationController
@@ -17,11 +17,10 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
     }
     
     func start() {
-        showCategoryMenu()
+        displaySubmenu()
     }
     
-    //MARK:- MenuProtocol
-    func showCategoryMenu() {
+    private func displaySubmenu() {
         let submenuViewCntroller = SubmenuViewController.instantiate()
         let recipes = state.retrieveRecipes(with: categoryId)
         
@@ -31,7 +30,7 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
                             instructions: item.instructions,
                             imageName: item.imageName, 
                             select: { [weak self] viewModel in
-                self?.showDetails(viewModel)
+                self?.displayItemDetails(viewModel)
             })
         }
         
@@ -39,8 +38,7 @@ class SubmenuCoordinator: NSObject, Coordinator, MenuProtocol {
         navigationController.pushViewController(submenuViewCntroller, animated: true)
     }
      
-    //ShowDetailsViewController
-    func showDetails(_ viewModel: RecipeViewModel) {
+    private func displayItemDetails(_ viewModel: RecipeViewModel) {
         let itemDetailsView = ItemDetailsView(viewModel: viewModel)
         let itemHostingView = UIHostingController(rootView: itemDetailsView)
         navigationController.pushViewController(itemHostingView, animated: true)
