@@ -27,23 +27,23 @@ class MenuViewController: UIViewController, Storyboarded {
     }
     
     private func load(items: [MenuItemViewModel]) {
-        let loadingController = LoadingViewController()
-        add(loadingController)
+        let spiner = SpinnerViewController()
+        add(spiner)
         
         updateMenu(
             with: items,
             tableView: self.tableview,
-            loadingController: loadingController
+            spiner: spiner
         )
     }
     
     private func updateMenu(
         with items: [MenuItemViewModel],
         tableView: UITableView,
-        loadingController: LoadingViewController
+        spiner: SpinnerViewController
     ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
-            loadingController.remove()
+            spiner.remove()
 
             if !items.isEmpty {
                 self?.dataSource = MenuDataSource(items: items)
@@ -53,7 +53,7 @@ class MenuViewController: UIViewController, Storyboarded {
     }
 }
 
-class LoadingViewController: UIViewController {
+class SpinnerViewController: UIViewController {
     
     lazy var activityIndicator : UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
