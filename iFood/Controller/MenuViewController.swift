@@ -53,22 +53,6 @@ class MenuViewController: UIViewController, Storyboarded {
     }
 }
 
-extension UIViewController {
-    
-    func add(_ child: UIViewController) {
-        addChild(child)
-        view.addSubview(child.view)
-        child.didMove(toParent: self)
-    }
-    
-    func remove(){
-        guard parent != nil  else { return }
-        willMove(toParent: parent)
-        view.removeFromSuperview()
-        removeFromParent()
-    }
-}
-
 class LoadingViewController: UIViewController {
     
     lazy var activityIndicator : UIActivityIndicatorView = {
