@@ -11,6 +11,7 @@ class SpinnerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSpinner()
+        view.backgroundColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {

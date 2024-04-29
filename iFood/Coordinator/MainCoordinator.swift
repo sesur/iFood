@@ -21,7 +21,7 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     private func displayMenu() {
         let menuViewController = MenuViewController.instantiate()
         
-        let items = state.service.getCategories().map { category in
+        let items = state.retrieveCategories().map { category in
             MenuItemViewModel(id: nil,
                               title: category.title,
                               imageName: category.imageName,
