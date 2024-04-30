@@ -15,21 +15,32 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     
     func start() {
         navigationController.delegate = self
-        displayMenu()
+        retrieveCategories()
     }
     
-    private func displayMenu() {
-        let menuViewController = MenuViewController.instantiate()
-        
-        let items = state.retrieveCategories().map { category in
-            MenuItemViewModel(id: nil,
-                              title: category.title,
-                              imageName: category.imageName,
-                              select: { [weak self] id in
-                self?.startSubmenuCoordinator(with: id)
-            })
+    private func retrieveCategories() {
+        state.retrieveCategories { [weak self] result in
+            switch result {
+            case .success(let items):
+                let fetchItems = items.map { item in
+                    MenuItemViewModel(id: item.id,
+                                      title: item.title,
+                                      imageName: item.imageName,
+                                      select: { [weak self] selectionId in
+                        self?.startSubmenuCoordinator(with: selectionId)
+                    })
+                }
+                
+                self?.displayMenu(items: fetchItems)
+                
+            case .failure(let error):
+                debugPrint("error: \(error.localizedDescription)")
+            }
         }
-        
+    }
+    
+    private func displayMenu(items: [MenuItemViewModel]) {
+        let menuViewController = MenuViewController.instantiate()
         menuViewController.items = items
         navigationController.pushViewController(menuViewController, animated: true)
     }

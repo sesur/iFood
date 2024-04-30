@@ -39,8 +39,12 @@ final class FoodServiceComposer {
     let remoteLoader: FeedLoader
     let localLoader: FeedLoader
     
-    private var categories = [FoodCategory]()
     private var recipes = [Recipe]()
+    
+    enum ServiceResult: Error {
+        case success([FoodCategory])
+        case failure(Error)
+    }
     
     init(remoteLoader: FeedLoader,
          localLoader: FeedLoader) {
@@ -48,12 +52,15 @@ final class FoodServiceComposer {
         self.localLoader = localLoader
     }
     
-    func getCategories() -> [FoodCategory] {
-        localLoader.get { [weak self] result in
-            self?.handleFeedResult(result)
+    func getCategories(completion: @escaping (ServiceResult) -> Void) {
+        localLoader.get { result in
+            switch result {
+            case .success(let food):
+                completion(.success(food.categories))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
-        
-        return categories
     }
     
     func getRecipes() -> [Recipe] {
@@ -67,11 +74,9 @@ final class FoodServiceComposer {
     private func handleFeedResult(_ result: FeedResult) {
         switch result {
         case .success(let food):
-            self.categories = food.categories
             self.recipes = food.recipes
         case .failure(let error):
             print(error)
-            self.categories = []
             self.recipes = []
         }
     }

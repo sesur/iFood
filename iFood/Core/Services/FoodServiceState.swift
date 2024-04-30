@@ -1,7 +1,7 @@
 import UIKit
 
 protocol FoodCategoryProtocol {
-    func retrieveCategories() -> [FoodCategory]
+    func retrieveCategories(completion: @escaping(FoodServiceComposer.ServiceResult) -> Void)
 }
 
 protocol FoodRecipeProtocol {
@@ -16,8 +16,8 @@ class FoodServiceState: FoodCategoryProtocol, FoodRecipeProtocol {
         self.service = service
     }
     
-    func retrieveCategories() -> [FoodCategory] {
-        service.getCategories()
+    func retrieveCategories(completion: @escaping(FoodServiceComposer.ServiceResult) -> Void) {
+        service.getCategories(completion: completion)
     }
     
     func retrieveRecipes(with id: Int) -> [Recipe] {
