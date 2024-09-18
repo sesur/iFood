@@ -56,3 +56,33 @@ extension SubmenuViewController: UICollectionViewDelegate, UICollectionViewDataS
         return 0
     }
 }
+
+struct ItemView: View {
+    var items: [RecipeViewModel]?
+    weak var coordinator: SubmenuCoordinator?
+    
+    var body: some View {
+        if let items = items {
+            ScrollView {
+                LazyHGrid(rows: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                    ForEach(items, id: \.id) { item in
+                        ItemDetailsView(viewModel: item)
+//                        Text(item.title)
+                    }
+                    //                    ForEach(items, id: \.title) { element in
+                    //                        Text(element.title)
+                    //                            .padding()
+                    //                            .background(Color.blue)
+                    //                            .foregroundColor(.white)
+                    //                            .cornerRadius(10)
+                    ////                            .onTapGesture {
+                    ////                                coordinator?.didSelectItem(element)
+                    ////                            }
+                    //                    }
+                    //                }
+                    //                .padding()
+                }
+            }
+        }
+    }
+}

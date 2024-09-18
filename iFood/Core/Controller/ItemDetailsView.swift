@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ItemDetailsView: View {
-    
+    @State private var isZoomed = false
     let viewModel: RecipeViewModel
     
     init(viewModel: RecipeViewModel) {
@@ -13,14 +13,19 @@ struct ItemDetailsView: View {
             ZStack {
                 Image(viewModel.imageName)
                     .resizable()
-                    .imageScale(.medium)
-                
                 let gradient = Gradient(colors: [.black.opacity(0.65), .clear])
                 LinearGradient(gradient: gradient,
                                startPoint: .topLeading,
                                endPoint: .bottomTrailing)
+                
             }
             .edgesIgnoringSafeArea(.top)
+            .aspectRatio(contentMode: isZoomed ? .fill : .fit)
+            .onTapGesture {
+                withAnimation {
+                    isZoomed.toggle()
+                }
+            }
             
             
             Text(viewModel.title)

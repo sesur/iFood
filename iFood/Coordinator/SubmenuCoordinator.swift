@@ -21,8 +21,10 @@ class SubmenuCoordinator: NSObject, Coordinator {
     }
     
     private func displaySubmenu() {
-        let submenuViewCntroller = SubmenuViewController.instantiate()
-        submenuViewCntroller.coordinator = self
+//        let submenuViewCntroller = SubmenuViewController.instantiate()
+//        submenuViewCntroller.coordinator = self
+        var itemView = ItemView()
+        
         
         let recipes = state.retrieveRecipes(with: categoryId)
         
@@ -36,8 +38,10 @@ class SubmenuCoordinator: NSObject, Coordinator {
             })
         }
         
-        submenuViewCntroller.items = items
-        navigationController.pushViewController(submenuViewCntroller, animated: true)
+//        submenuViewCntroller.items = items
+        itemView.items = items
+        let itemHostingView = UIHostingController(rootView: itemView)
+        navigationController.pushViewController(itemHostingView, animated: true)
     }
      
     private func displayItemDetails(_ viewModel: RecipeViewModel) {
