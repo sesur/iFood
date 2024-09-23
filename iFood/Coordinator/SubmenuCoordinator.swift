@@ -21,15 +21,13 @@ class SubmenuCoordinator: NSObject, Coordinator {
     }
     
     private func displaySubmenu() {
-//        let submenuViewCntroller = SubmenuViewController.instantiate()
-//        submenuViewCntroller.coordinator = self
         var itemView = ItemView()
-        
-        
+        itemView.coordinator = self
         let recipes = state.retrieveRecipes(with: categoryId)
         
         let items = recipes.map { item in
-            RecipeViewModel(id: categoryId,
+            RecipeViewModel(id: UUID(),
+                            categoryId: categoryId,
                             title: item.title,
                             instructions: item.instructions,
                             imageName: item.imageName, 
@@ -38,27 +36,14 @@ class SubmenuCoordinator: NSObject, Coordinator {
             })
         }
         
-//        submenuViewCntroller.items = items
         itemView.items = items
         let itemHostingView = UIHostingController(rootView: itemView)
         navigationController.pushViewController(itemHostingView, animated: true)
     }
      
-    private func displayItemDetails(_ viewModel: RecipeViewModel) {
+    func displayItemDetails(_ viewModel: RecipeViewModel) {
         let itemDetailsView = ItemDetailsView(viewModel: viewModel)
         let itemHostingView = UIHostingController(rootView: itemDetailsView)
         navigationController.pushViewController(itemHostingView, animated: true)
     }
-    
-    deinit {
-        print("deinit -> SubmenuCoordinator")
-    }
-}
-
-struct RecipeViewModel {
-    let id: Int
-    let title: String
-    let instructions: String
-    let imageName: String
-    let select: (Self) -> Void
 }

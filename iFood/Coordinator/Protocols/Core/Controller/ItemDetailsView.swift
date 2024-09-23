@@ -10,7 +10,7 @@ struct ItemDetailsView: View {
     
     var body: some View {
         VStack {
-            ZStack {
+            ZStack(alignment: .center) {
                 Image(viewModel.imageName)
                     .resizable()
                 let gradient = Gradient(colors: [.black.opacity(0.65), .clear])
@@ -45,10 +45,11 @@ struct ItemDetailsView: View {
 }
 
 #Preview {
-    let viewModel = RecipeViewModel(id: 0,
+    let viewModel = RecipeViewModel(id: UUID(),
+                                    categoryId: 1,
                                     title: "Title",
                                     instructions: "instructions",
                                     imageName: "imageName",
                                     select: { _ in })
-    return ItemDetailsView(viewModel: viewModel)
+    ItemDetailsView(viewModel: viewModel)
 }

@@ -28,9 +28,11 @@ struct SubmenuView: View {
 }
 
 #Preview {
-    let vm = RecipeViewModel(id: 0, title: "Title",
-                    instructions: "instructions",
-                             imageName: "imageName", 
+    let vm = RecipeViewModel(id: UUID(),
+                             categoryId: 1,
+                             title: "Title",
+                             instructions: "instructions",
+                             imageName: "imageName",
                              select: { _ in })
-    return SubmenuView(viewModel: vm)
+    SubmenuView(viewModel: vm)
 }
