@@ -10,7 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let navigationController = UINavigationController()
         let service = FoodServiceComposer(remoteLoader: RemoteLoader(),
-                                  localLoader: LocalLoader())
+                                          localLoader: LocalLoader(bundle: BundleLoader(),
+                                                                   fileName: BundleFileName.food))
         let state = FoodServiceState(service: service)
         coordinator = MainCoordinator(navigationController: navigationController,
                                       state: state)

@@ -17,9 +17,21 @@ struct RemoteLoader: FeedLoader {
     }
 }
 
+struct BundleFileName {
+    static let food = "Food"
+    static let unknown = "unknown"
+}
+
+enum BundleError: Error {
+    case fileNotFound
+}
+
 struct LocalLoader: FeedLoader {
+    let bundle: BundleLoader
+    let fileName: String
+    
     func get(completion: @escaping(FeedResult) -> Void) {
-        guard let path = Bundle.main.url(forResource: "Food", withExtension: "json") else {
+        guard let path = bundle.url(forResource: fileName, withExtension: "json") else {
             completion(.failure(FoodServiceError.fileNotFound))
             return
         }
