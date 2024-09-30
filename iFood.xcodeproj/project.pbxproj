@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,6 +34,16 @@
 		C9AE3A7D2C9F680D009B45EE /* RecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE3A7C2C9F680D009B45EE /* RecipeViewModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C93F9F2E2CAA723D007381FF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7D197260222D14D20010CA1C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7D197267222D14D20010CA1C;
+			remoteInfo = iFood;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		7D197268222D14D30010CA1C /* iFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D19726B222D14D30010CA1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,11 +71,23 @@
 		7D8723012BD0FB6F0073AB19 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		7D87475B2BD9203E00FE4A24 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		7D87475E2BD9225E00FE4A24 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
+		C93F9F2A2CAA723D007381FF /* iFoodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iFoodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AE3A7C2C9F680D009B45EE /* RecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C93F9F2B2CAA723D007381FF /* iFoodTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = iFoodTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		7D197265222D14D20010CA1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C93F9F272CAA723D007381FF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -79,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				7D19726A222D14D30010CA1C /* iFood */,
+				C93F9F2B2CAA723D007381FF /* iFoodTests */,
 				7D197269222D14D30010CA1C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				7D197268222D14D30010CA1C /* iFood.app */,
+				C93F9F2A2CAA723D007381FF /* iFoodTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -240,6 +264,29 @@
 			productReference = 7D197268222D14D30010CA1C /* iFood.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C93F9F292CAA723D007381FF /* iFoodTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C93F9F322CAA723D007381FF /* Build configuration list for PBXNativeTarget "iFoodTests" */;
+			buildPhases = (
+				C93F9F262CAA723D007381FF /* Sources */,
+				C93F9F272CAA723D007381FF /* Frameworks */,
+				C93F9F282CAA723D007381FF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C93F9F2F2CAA723D007381FF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C93F9F2B2CAA723D007381FF /* iFoodTests */,
+			);
+			name = iFoodTests;
+			packageProductDependencies = (
+			);
+			productName = iFoodTests;
+			productReference = C93F9F2A2CAA723D007381FF /* iFoodTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -247,13 +294,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = Sergiu;
 				TargetAttributes = {
 					7D197267222D14D20010CA1C = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1140;
+					};
+					C93F9F292CAA723D007381FF = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 7D197267222D14D20010CA1C;
 					};
 				};
 			};
@@ -271,6 +322,7 @@
 			projectRoot = "";
 			targets = (
 				7D197267222D14D20010CA1C /* iFood */,
+				C93F9F292CAA723D007381FF /* iFoodTests */,
 			);
 		};
 /* End PBXProject section */
@@ -284,6 +336,13 @@
 				7D8723002BCFBCD10073AB19 /* Food.json in Resources */,
 				7D197273222D14D50010CA1C /* Assets.xcassets in Resources */,
 				7D197271222D14D30010CA1C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C93F9F282CAA723D007381FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,7 +377,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C93F9F262CAA723D007381FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C93F9F2F2CAA723D007381FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7D197267222D14D20010CA1C /* iFood */;
+			targetProxy = C93F9F2E2CAA723D007381FF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7D19726F222D14D30010CA1C /* Main.storyboard */ = {
@@ -502,6 +576,49 @@
 			};
 			name = Release;
 		};
+		C93F9F302CAA723D007381FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sergiu.iFoodTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iFood.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/iFood";
+			};
+			name = Debug;
+		};
+		C93F9F312CAA723D007381FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sergiu.iFoodTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iFood.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/iFood";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -519,6 +636,15 @@
 			buildConfigurations = (
 				7D19727B222D14D50010CA1C /* Debug */,
 				7D19727C222D14D50010CA1C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C93F9F322CAA723D007381FF /* Build configuration list for PBXNativeTarget "iFoodTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C93F9F302CAA723D007381FF /* Debug */,
+				C93F9F312CAA723D007381FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
