@@ -31,3 +31,20 @@ struct ItemView: View {
         }
     }
 }
+
+#Preview {
+    let items = [RecipeViewModel(id: UUID(),
+                                 categoryId: 1,
+                                 title: "Category Title 1",
+                                 instructions: "instructions",
+                                 imageName: "imageName",
+                                 select: { _ in }),
+                 RecipeViewModel(id: UUID(),
+                                 categoryId: 2,
+                                 title: "Category Title 2",
+                                 instructions: "instructions",
+                                 imageName: "imageName",
+                                 select: { _ in })]
+    
+    ItemView(items: items, coordinator: nil)
+}
