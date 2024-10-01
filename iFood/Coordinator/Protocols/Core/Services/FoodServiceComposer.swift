@@ -2,9 +2,10 @@ import Foundation
 
 enum FoodServiceError: Error {
     case fileNotFound
+    case dataCorruption
 }
 
-typealias FeedResult = Result<Food, Error>
+typealias FeedResult = Result<Food, FoodServiceError>
 
 protocol FeedLoader {
     func get(completion: @escaping(FeedResult) -> Void)
@@ -22,17 +23,14 @@ struct BundleFileName {
     static let unknown = "unknown"
 }
 
-enum BundleError: Error {
-    case fileNotFound
-}
-
 struct LocalLoader: FeedLoader {
-    let bundle: BundleLoader
-    let fileName: String
+    let bundle: BundleProtocol
+    let fileName: String?
+    let ext: String?
     
     func get(completion: @escaping(FeedResult) -> Void) {
-        guard let path = bundle.url(forResource: fileName, withExtension: "json") else {
-            completion(.failure(FoodServiceError.fileNotFound))
+        guard let path = bundle.url(forResource: fileName, withExtension: ext) else {
+            completion(.failure(.fileNotFound))
             return
         }
         
@@ -41,7 +39,7 @@ struct LocalLoader: FeedLoader {
             let food = try JSONDecoder().decode(Food.self, from: jsonData)
             completion(.success(food))
         } catch {
-            completion(.failure(error))
+            completion(.failure(.dataCorruption))
         }
     }
 }
