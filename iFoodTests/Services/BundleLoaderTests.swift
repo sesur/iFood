@@ -3,46 +3,41 @@ import Foundation
 @testable import iFood
 
 struct BundleLoaderTests {
-    private struct FileName {
-        static let empty = ""
-        static let valid = "Food"
-        static let invalid = "Invalid"
-        static let validExtension = "json"
-        static let invalidExtension = "txt"
-    }
     
-    @Test("Bundle URL path with Invalid resources should return nil")
+    @Test("Should return invalid Bundle URL path for 'invalid' resources")
     func urlForResources_shouldReturnNil() {
-        var url = makeSUT(fileName: nil, ext: nil)
+        var url = makeSUT()
         #expect(url == nil)
         
-        url = makeSUT(fileName: FileName.empty, ext: FileName.empty)
+        url = makeSUT(fileName: .empty, fileExtension: .empty)
         #expect(url == nil)
         
-        url = makeSUT(fileName: FileName.empty, ext: FileName.validExtension)
+        url = makeSUT(fileName: .empty, fileExtension: .json)
         #expect(url == nil)
         
-        url = makeSUT(fileName: FileName.valid, ext: FileName.invalidExtension)
+        url = makeSUT(fileName: .food, fileExtension: .txt)
         #expect(url == nil)
         
-        url = makeSUT(fileName: FileName.invalid, ext: FileName.validExtension)
+        url = makeSUT(fileName: .unknown, fileExtension: .json)
         #expect(url == nil)
         
-        url = makeSUT(fileName: FileName.invalid, ext: FileName.validExtension)
+        url = makeSUT(fileName: .unknown, fileExtension: .unknown)
         #expect(url == nil)
     }
     
-    @Test("Bundle URL path with Valid resources should return valid URL")
+    @Test("Should return valid Bundle URL path for 'valid' resources")
     func urlForResources_shouldReturnURL() {
-        let url = makeSUT(fileName: FileName.valid, ext: FileName.validExtension)
+        let url = makeSUT(fileName: .food, fileExtension: .json)
         #expect(url != nil)
         #expect(url?.pathExtension == "json")
         #expect(url?.isFileURL == true)
         #expect(url?.lastPathComponent == "Food.json")
     }
     
-    private func makeSUT(fileName: String? = nil, ext: String? = FileName.valid) -> URL? {
+    private func makeSUT(fileName: FileName? = nil, fileExtension: FileExtensionType? = nil) -> URL? {
+        let bundleResources = BundleResources(fileName: fileName,
+                                              fileExtension: fileExtension)
         let sut = BundleLoader()
-        return sut.url(forResource: fileName, withExtension: ext)
+        return sut.url(resources: bundleResources)
     }
 }

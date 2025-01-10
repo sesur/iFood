@@ -17,7 +17,7 @@ class FoodServiceState: FoodCategoryProtocol, FoodRecipeProtocol {
     }
     
     func retrieveCategories(completion: @escaping(FoodServiceComposer.ServiceResult) -> Void) {
-        service.getCategories(completion: completion)
+        service.getCategoriesWithAsync(completion: completion)
     }
     
     func retrieveRecipes(with id: Int) -> [Recipe] {

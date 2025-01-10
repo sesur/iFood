@@ -8,7 +8,19 @@ enum FoodServiceError: Error {
 typealias FeedResult = Result<Food, FoodServiceError>
 
 protocol FeedLoader {
+    @available(*, deprecated, message: "Use async `getResults()` instead.")
     func get(completion: @escaping(FeedResult) -> Void)
+    func getResults() async -> FeedResult
+}
+
+extension FeedLoader {
+    func getResults() -> FeedResult {
+        .failure(.fileNotFound)
+    }
+    
+    func get(completion: @escaping(FeedResult) -> Void) {
+        
+    }
 }
 
 struct RemoteLoader: FeedLoader {
@@ -18,28 +30,47 @@ struct RemoteLoader: FeedLoader {
     }
 }
 
-struct BundleFileName {
-    static let food = "Food"
-    static let unknown = "unknown"
+enum FileName: String {
+    case food
+    case corrupted
+    case unknown
+    case empty = ""
+}
+
+enum FileExtensionType: String {
+    case json
+    case txt
+    case unknown
+    case empty = ""
+}
+
+struct BundleResources {
+    let fileName: FileName?
+    let fileExtension: FileExtensionType?
+    
+    
+    
+    init(fileName: FileName?, fileExtension: FileExtensionType?) {
+        self.fileName = fileName
+        self.fileExtension = fileExtension
+    }
 }
 
 struct LocalLoader: FeedLoader {
-    let bundle: BundleProtocol
-    let fileName: String?
-    let ext: String?
+    let loader: BundleLoaderProtocol
+    let bundle: BundleResources
     
-    func get(completion: @escaping(FeedResult) -> Void) {
-        guard let path = bundle.url(forResource: fileName, withExtension: ext) else {
-            completion(.failure(.fileNotFound))
-            return
+    func getResults() async -> FeedResult {
+        guard let path = loader.url(resources: bundle) else {
+            return .failure(.fileNotFound)
         }
         
         do {
             let jsonData = try Data(contentsOf: path)
             let food = try JSONDecoder().decode(Food.self, from: jsonData)
-            completion(.success(food))
+            return .success(food)
         } catch {
-            completion(.failure(.dataCorruption))
+            return .failure(.dataCorruption)
         }
     }
 }
@@ -63,7 +94,16 @@ final class FoodServiceComposer {
     }
     
     func getCategories(completion: @escaping (ServiceResult) -> Void) {
-        localLoader.get { result in
+        switch localLoader.getResults() {
+        case .success(let food): completion(.success(food.categories))
+        case .failure(let error): completion(.failure(error))
+        }
+    }
+        
+    func getCategoriesWithAsync(completion: @escaping (ServiceResult) -> Void) {
+        Task {
+            let result = await localLoader.getResults()
+            
             switch result {
             case .success(let food):
                 completion(.success(food.categories))
@@ -74,10 +114,8 @@ final class FoodServiceComposer {
     }
     
     func getRecipes() -> [Recipe] {
-        localLoader.get { [weak self] result in
-            self?.handleFeedResult(result)
-        }
-        
+        let result = localLoader.getResults()
+        handleFeedResult(result)
         return recipes
     }
     

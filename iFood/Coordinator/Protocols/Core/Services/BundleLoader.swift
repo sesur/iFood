@@ -1,16 +1,22 @@
 import Foundation
 
-protocol BundleProtocol {
-    func url(forResource name: String?, withExtension ext: String?) -> URL?
+protocol BundleLoaderProtocol {
+    func url(resources bundle: BundleResources) -> URL?
 }
 
-class BundleLoader: BundleProtocol {
-    func url(forResource name: String?, withExtension ext: String?) -> URL? {
-        guard let name, !name.isEmpty,
-              let ext, !ext.isEmpty,
-              ext == "json" else {
+class BundleLoader: BundleLoaderProtocol {
+    func url(resources bundle: BundleResources) -> URL? {
+        
+        guard let fileName = bundle.fileName?.rawValue.capitalized, !fileName.isEmpty,
+              let fileExtension = bundle.fileExtension, !fileExtension.rawValue.isEmpty,
+              fileExtension == .json else {
             return nil
         }
-        return Bundle.main.url(forResource: name, withExtension: ext)
+        
+        return Bundle.main
+            .url(
+                forResource: fileName,
+                withExtension: fileExtension.rawValue
+            )
     }
 }

@@ -31,8 +31,9 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
                         self?.startSubmenuCoordinator(with: selectionId)
                     })
                 }
-                
-                self?.displayMenu(items: fetchItems)
+                Task {
+                    self?.displayMenu(items: fetchItems)
+                }
                 
             case .failure(let error):
                 debugPrint("error: \(error.localizedDescription)")

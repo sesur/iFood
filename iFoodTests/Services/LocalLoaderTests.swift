@@ -6,107 +6,69 @@ import Foundation
 @Suite
 struct LocalLoaderTests {
     
-    @Test("Feed results from nil fileName & fileExtension, should return '.fileNotFound'")
+    @Test("Feed results for invalid file resources should return '.fileNotFound'")
     func loadFeedResultWithNilValues() async {
-        let result = await loadFeedResult(from: makeSUT())
         
-        switch result {
-        case .success(let food):
-            #expect(food.categories.count == 3)
-        case .failure(let error):
-            #expect(error == .fileNotFound)
-        case .none:
-            Issue.record("Expected feed result, but received nil.")
-        }
+        var sut = makeSUT()
+        var result = await loadFeedResult(from: makeSUT())
+        
+        #expect(result.error == .fileNotFound)
+        
+        sut = makeSUT(fileName: .unknown,
+                      fileExtension: .json)
+        result = await loadFeedResult(from: sut)
+        
+        #expect(result.error == .fileNotFound)
+        
+        sut = makeSUT(fileName: .food, fileExtension: .txt)
+        result = await loadFeedResult(from: sut)
+        
+        #expect(result.error == .fileNotFound)
+        
+        sut = makeSUT(fileName: .unknown, fileExtension: .unknown)
+        result = await loadFeedResult(from: sut)
+        
+        #expect(result.error == .fileNotFound)
     }
     
-    @Test("Feed results from Wrong file name, should return '.fileNotFound'")
-    func loadFeedResultFromNotExistingFile() async {
-        
-        let sut = makeSUT(fileName: "DoesNotExist", fileExtension: "json")
+    @Test("Feed results for valid file resources, should return items")
+    func loadFeedResultFromCorrectFile() async {
+        let sut = makeSUT(fileName: .food, fileExtension: .json)
         let result = await loadFeedResult(from: sut)
         
-        switch result {
-        case .success(let food):
-            #expect(food.categories.count == 3)
-        case .failure(let error):
-            #expect(error == .fileNotFound)
-        case .none:
-            Issue.record("Expected feed result, but received nil.")
-        }
+        #expect(result.food?.categories.count == 5)
+        #expect(result.food?.categories.first?.title == "Burgers")
+        #expect(result.food?.categories.last?.title == "Sandwiches")
+        #expect(sut.bundle.fileName?.rawValue == FileName.food.rawValue)
+        #expect(sut.bundle.fileExtension?.rawValue == FileExtensionType.json.rawValue)
     }
     
-    @Test("Feed results from Wrong file extwnsion, should return '.fileNotFound'")
-    func loadFeedResultFromWrongFileExtension() async {
-        
-        let sut = makeSUT(fileName: "Food", fileExtension: "txt")
+    @Test("Feed results from corrupted file resources, should return '.dataCorruption'")
+    func loadFeedResultFromCorruptedFile() async {
+        let sut = makeSUT(fileName: .corrupted, fileExtension: .json)
         let result = await loadFeedResult(from: sut)
         
-        switch result {
-        case .success(let food):
-            #expect(food.categories.count == 3)
-        case .failure(let error):
-            #expect(error == .fileNotFound)
-        case .none:
-            Issue.record("Expected feed result, but received nil.")
-        }
-    }
-    
-    @Test("Feed results from correct file name, should return items")
-    func loadFeedResultFromCorrectFile() async throws {
-        let sut = makeSUT(fileName: "Food", fileExtension: "json")
-        let result = await loadFeedResult(from: sut)
-        
-        switch result {
-        case .success(let food):
-            #expect(food.categories.count == 5)
-            #expect(food.categories.first?.title == "Burgers")
-            #expect(food.categories.last?.title == "Sandwiches")
-        case .failure(let error):
-            #expect(error == .fileNotFound)
-        case .none:
-            Issue.record("Expected feed result, but received nil.")
-        }
-        
-        #expect(sut.fileName == "Food")
-        #expect(sut.ext == "json")
-    }
-    
-    @Test("Feed results from corrupted file name, should return '.dataCorruption'")
-    func loadFeedResultFromCorruptedFile() async throws {
-        let sut = makeSUT(fileName: "FoodCorrupted", fileExtension: "json")
-        let result = await loadFeedResult(from: sut)
-        
-        switch result {
-        case .success(let food):
-            #expect(food.categories.count == 1)
-        case .failure(let error):
-            #expect(error == .dataCorruption)
-        case .none:
-            Issue.record("Expected feed result, but received nil.")
-        }
-        
-        #expect(sut.fileName == "FoodCorrupted")
-        #expect(sut.ext == "json")
+        #expect(result.error == .dataCorruption)
+        #expect(sut.bundle.fileName?.rawValue == FileName.corrupted.rawValue)
+        #expect(sut.bundle.fileExtension?.rawValue == FileExtensionType.json.rawValue)
     }
     
     //MARK: - Helpers
-    private func makeSUT(fileName: String? = nil, fileExtension: String? = nil) -> LocalLoader {
-        let sut = LocalLoader(bundle: BundleMock(),
-                              fileName: fileName,
-                              ext: fileExtension)
-        return sut
+    private func makeSUT(fileName: FileName? = nil, fileExtension: FileExtensionType? = nil) -> LocalLoader {
+        let bundleResources = BundleResources(fileName: fileName,
+                                              fileExtension: fileExtension)
+        return LocalLoader(loader: BundleMock(),
+                           bundle: bundleResources)
     }
     
-    private func loadFeedResult(from sut: LocalLoader) async -> FeedResult? {
-        var result: FeedResult?
+    private func loadFeedResult(from sut: LocalLoader) async -> (food: Food?, error: FoodServiceError?) {
+        let result = await sut.getResults()
         
-        await confirmation { fulfil in
-            sut.get { loadResult in
-                result = loadResult
-                fulfil()
-            }
+        switch result {
+        case .success(let food):
+            return (food, nil)
+        case .failure(let error):
+            return (nil, error)
         }
-        return result
     }
 }

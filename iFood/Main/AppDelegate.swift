@@ -9,9 +9,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let navigationController = UINavigationController()
+        let localLoader = LocalLoader(loader: BundleLoader(),
+                                      bundle: BundleResources(fileName: FileName.food,
+                                                              fileExtension: FileExtensionType.json))
+        
         let service = FoodServiceComposer(remoteLoader: RemoteLoader(),
-                                          localLoader: LocalLoader(bundle: BundleLoader(),
-                                                                   fileName: BundleFileName.food, ext: "json"))
+                                          localLoader: localLoader)
+
         let state = FoodServiceState(service: service)
         coordinator = MainCoordinator(navigationController: navigationController,
                                       state: state)

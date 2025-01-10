@@ -1,8 +1,11 @@
 import Foundation
 @testable import iFood
 
-class BundleMock: BundleProtocol {
-    func url(forResource name: String?, withExtension ext: String?) -> URL? {
+class BundleMock: BundleLoaderProtocol {
+    func url(resources bundle: BundleResources) -> URL? {
+        let name = bundle.fileName?.rawValue.capitalized
+        let ext = bundle.fileExtension?.rawValue
+        
         if let name, let ext {
             return Bundle.main.url(forResource: name, withExtension: ext)
         }
