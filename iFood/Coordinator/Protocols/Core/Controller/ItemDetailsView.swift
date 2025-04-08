@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ItemDetailsView: View {
-    @State private var isZoomed = false
     let viewModel: RecipeViewModel
     
     init(viewModel: RecipeViewModel) {
@@ -20,13 +19,7 @@ struct ItemDetailsView: View {
                 
             }
             .edgesIgnoringSafeArea(.top)
-            .aspectRatio(contentMode: isZoomed ? .fill : .fit)
-            .onTapGesture {
-                withAnimation {
-                    isZoomed.toggle()
-                }
-            }
-            
+            .aspectRatio(contentMode: .fit)
             
             Text(viewModel.title)
                 .font(.title2)

@@ -21,18 +21,20 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     
     private func retrieveCategories() {
         state.retrieveCategories { [weak self] result in
+            guard let self else { return }
+            
             switch result {
             case .success(let items):
-                let fetchItems = items.map { item in
+                let fetchItems = items.categories.map { item in
                     MenuItemViewModel(id: item.id,
                                       title: item.title,
                                       imageName: item.imageName,
-                                      select: { [weak self] selectionId in
-                        self?.startSubmenuCoordinator(with: selectionId)
+                                      select: { selectionId in
+                        self.startSubmenuCoordinator(with: selectionId)
                     })
                 }
                 Task {
-                    self?.displayMenu(items: fetchItems)
+                    self.displayMenu(items: fetchItems)
                 }
                 
             case .failure(let error):

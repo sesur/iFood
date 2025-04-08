@@ -5,23 +5,22 @@ protocol FoodCategoryProtocol {
 }
 
 protocol FoodRecipeProtocol {
-    func retrieveRecipes(with id: Int) -> [Recipe]
+    func retrieveRecipes(completion: @escaping(FoodServiceComposer.ServiceResult) -> Void)
 }
 
 class FoodServiceState: FoodCategoryProtocol, FoodRecipeProtocol {
  
-    let service: FoodServiceComposer
+    private let service: FoodServiceComposer
     
     init(service: FoodServiceComposer) {
         self.service = service
     }
     
     func retrieveCategories(completion: @escaping(FoodServiceComposer.ServiceResult) -> Void) {
-        service.getCategoriesWithAsync(completion: completion)
+        service.getFood(completion: completion)
     }
     
-    func retrieveRecipes(with id: Int) -> [Recipe] {
-        let recipes = service.getRecipes()
-        return recipes.filter { $0.id == id }
+    func retrieveRecipes(completion: @escaping(FoodServiceComposer.ServiceResult) -> Void) {
+        service.getFood(completion: completion)
     }
 }

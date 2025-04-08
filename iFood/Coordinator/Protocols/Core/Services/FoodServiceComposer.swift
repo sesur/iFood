@@ -48,8 +48,6 @@ struct BundleResources {
     let fileName: FileName?
     let fileExtension: FileExtensionType?
     
-    
-    
     init(fileName: FileName?, fileExtension: FileExtensionType?) {
         self.fileName = fileName
         self.fileExtension = fileExtension
@@ -76,14 +74,11 @@ struct LocalLoader: FeedLoader {
 }
 
 final class FoodServiceComposer {
-    
-    let remoteLoader: FeedLoader
-    let localLoader: FeedLoader
-    
-    private var recipes = [Recipe]()
+    private let remoteLoader: FeedLoader
+    private let localLoader: FeedLoader
     
     enum ServiceResult: Error {
-        case success([FoodCategory])
+        case success(Food)
         case failure(Error)
     }
     
@@ -93,39 +88,19 @@ final class FoodServiceComposer {
         self.localLoader = localLoader
     }
     
-    func getCategories(completion: @escaping (ServiceResult) -> Void) {
-        switch localLoader.getResults() {
-        case .success(let food): completion(.success(food.categories))
-        case .failure(let error): completion(.failure(error))
-        }
+    func getFood(completion: @escaping (ServiceResult) -> Void) {
+        fetchLocalResults(completion: completion)
     }
-        
-    func getCategoriesWithAsync(completion: @escaping (ServiceResult) -> Void) {
+    
+    private func fetchLocalResults(completion: @escaping (ServiceResult) -> Void) {
         Task {
             let result = await localLoader.getResults()
-            
             switch result {
             case .success(let food):
-                completion(.success(food.categories))
+                completion(.success(food))
             case .failure(let error):
                 completion(.failure(error))
             }
-        }
-    }
-    
-    func getRecipes() -> [Recipe] {
-        let result = localLoader.getResults()
-        handleFeedResult(result)
-        return recipes
-    }
-    
-    private func handleFeedResult(_ result: FeedResult) {
-        switch result {
-        case .success(let food):
-            self.recipes = food.recipes
-        case .failure(let error):
-            print(error)
-            self.recipes = []
         }
     }
 }

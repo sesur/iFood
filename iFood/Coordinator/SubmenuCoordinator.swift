@@ -23,22 +23,52 @@ class SubmenuCoordinator: NSObject, Coordinator {
     private func displaySubmenu() {
         var itemView = ItemView()
         itemView.coordinator = self
-        let recipes = state.retrieveRecipes(with: categoryId)
         
-        let items = recipes.map { item in
-            RecipeViewModel(id: UUID(),
-                            categoryId: categoryId,
-                            title: item.title,
-                            instructions: item.instructions,
-                            imageName: item.imageName, 
-                            select: { [weak self] viewModel in
-                self?.displayItemDetails(viewModel)
-            })
+        fetchRecipes { [weak self] recipes in
+            DispatchQueue.main.async {
+                self?.presentSubmenu(with: recipes, in: itemView)
+            }
         }
+    }
+    
+    private func fetchRecipes(completion: @escaping ([Recipe]) -> Void) {
+        state.retrieveRecipes { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let item):
+                let filtered = item.recipes.filter { $0.id == self.categoryId }
+                completion(filtered)
+                
+            case .failure(let error):
+                self.handleRecipeFetchError(error)
+            }
+        }
+    }
+    
+    private func presentSubmenu(with recipes: [Recipe], in itemView: ItemView) {
+        var updatedItemView = itemView
+        updatedItemView.items = recipes.map(makeViewModel(from:))
         
-        itemView.items = items
-        let itemHostingView = UIHostingController(rootView: itemView)
-        navigationController.pushViewController(itemHostingView, animated: true)
+        let hostingController = UIHostingController(rootView: updatedItemView)
+        navigationController.pushViewController(hostingController, animated: true)
+    }
+    
+    private func makeViewModel(from recipe: Recipe) -> RecipeViewModel {
+        RecipeViewModel(
+            id: UUID(),
+            categoryId: recipe.id,
+            title: recipe.title,
+            instructions: recipe.instructions,
+            imageName: recipe.imageName,
+            select: { [weak self] viewModel in
+                self?.displayItemDetails(viewModel)
+            }
+        )
+    }
+    
+    private func handleRecipeFetchError(_ error: Error) {
+        print("Error retrieving recipes: \(error)")
     }
      
     func displayItemDetails(_ viewModel: RecipeViewModel) {
